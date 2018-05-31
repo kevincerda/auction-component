@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const db = new Sequelize('auction', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'postgres'
 });
 
 db.authenticate()

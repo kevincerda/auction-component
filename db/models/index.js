@@ -1,15 +1,9 @@
 const Sequelize = require('sequelize');
 const { db } = require('../config');
+const { initialize } = require('../seed/seed');
 
 const Product = db.define('product', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
-  },
-
-  productName: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -46,15 +40,7 @@ Product.hasMany(Bid);
 Bid.belongsTo(Product);
 
 db.sync()
-  .then(() => {
-    Product.create({
-      productName: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter',
-      condition: 'used',
-      minimum: 5.00,
-      watchers: 8,
-      endtime: new Date(2018, 6, 10, 0)
-    });
-  })
+  .then(initialize.product()).then(initialize.bid()).then(() => console.log('successfully synced to db'))
   .catch(err => console.log('error syncing db', err))
 
 module.exports = {

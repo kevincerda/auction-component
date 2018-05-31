@@ -1,10 +1,11 @@
+const Sequelize = require('sequelize');
 const { Product, Bid } = require('../../db/models');
 
 const AuctionController = {
   'GET': (req, res) => {
     Product.find({
       where: {
-        productName: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter'
+        name: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter'
       }
     }).then(data => {
       res.status(200).send(data);
@@ -18,7 +19,7 @@ const AuctionController = {
       watchers: Sequelize.literal('watchers + 1')
     }, {
       where: {
-        productName: req.body.name
+        id: req.body.id
       }
     }).then(() => {
       res.status(201).send('successfully updated watchers');
@@ -29,50 +30,40 @@ const AuctionController = {
 };
 
 const BidController = {
-//   'GET': (req, res) => {
-//     Product.findAndCountAll({
-//       include: [{
-//         model: 'Bid'
-//       }, {
-//         where: {
-//           'productId': 1
-//         }
-//       }]
-//     }).then(count => {
-//       Product.getBid({
-//         where: {
-//           amount: Sequelize.fn('max', Sequelize.col('amount'))
-//         }
-//       }).then(bid => {
-//         let result = {};
-//         result.amount = bid.data.amount;
-//         result.bids = count;
-//         res.status(200).send(result);
-//       }).catch(err => {
-//         res.status(404).send(err);
-//       })
-//     })
-//   },
+  'GET': (req, res) => {
+    let bidCount = 0;
+    Bid.count({
+      where: {
+        productId: req.body.id
+      }
+    }).then(count => {
+      bidCount = count;
+      Bid.max({
+        where: {
+          productId: req.body.id
+        }
+      })
+    }).then(max => {
+      res.status(201).send();
+      console.log('*******************COUNT = ', count);
+    }).catch(err => {
+      res.status(404).send(err);
+    })
+  },
 
   'POST': (req, res) => {
     Product.find({
       where: {
-        productName: req.body.name
+        name: req.body.name
       }
-    }).then(item => {
-      if (item) {
-        item.createBid({
-          amount: req.body.bidAmount
-        }).then(() => {
-          //make query here to grab the highest bid and bid count
-          //consider putting the bidcount and the highest bid on the product table with initial values of null
-          res.status(201).send(data);
-        }).catch(err => {
-          res.status(400).send(err);
-        })
-      }
+    }).then(foundProduct => {
+      foundProduct.createBid({
+        amount: req.body.bidAmount
+      })
+    }).then(data => {
+      res.status(201).send(data);
     }).catch(err => {
-      console.log('could not find product in db', err);
+      res.status(400).send(err);
     })
   }
 };
@@ -81,3 +72,23 @@ module.exports = {
   AuctionController: AuctionController,
   BidController: BidController
 };
+
+
+//in client
+//add a handler for getting highest bid and bid count
+  //get request from /api/auction/bid/:id
+  //req.params (test with postman)
+  //check the syntax of url
+//chain the get request for /bid/:id to the post request
+//figure out how to display time left for auction
+
+//in controller
+//see if i can chain together count and max somehow and send them back together in 1 object
+  //console logs to see that i am sending back the correct data
+//see that page is rendering dynamically on bid post
+  //add a conditional that only allows user to post if the bid is higher than value in db and also is above
+  //the minimum bid value
+  //see if i can refactor the post so that I dont initially have to query the product table and then create
+  //the bid off of that found instance
+//fix AuctionController.post, watchers doesnt seem to update
+  //if not using sequelize function, remove from first line

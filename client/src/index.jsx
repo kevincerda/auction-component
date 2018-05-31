@@ -6,14 +6,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bidAmount: 0,
+      id: 0,
       name: '',
       condition: '',
       price: 0,
       minimum: 0,
-      bids: 0,
       watchers: 0,
-      endtime: '0d0h'
+      endtime: '0d0h',
+      bids: 0,
+      bidAmount: 0
     }
     this.handleBidChange = this.handleBidChange.bind(this);
     this.handleBidSubmit = this.handleBidSubmit.bind(this);
@@ -24,7 +25,8 @@ class App extends React.Component {
     axios.get('/api/auction')
     .then(({ data }) => {
       this.setState({
-        name: data.productName,
+        id: data.id,
+        name: data.name,
         condition: data.condition,
         minimum: data.minimum,
         watchers: data.watchers,
@@ -43,12 +45,12 @@ class App extends React.Component {
 
   handleBidSubmit() {
     axios.post('/api/auction/bid', {
-      name: this.state.name,
-      bidAmount: Number(this.state.bidAmount)
-    }).then(({ data }) => {
+      id: this.state.id,
+      bidAmount: this.state.bidAmount
+    }).then(data => {
       this.setState({
         bids: data.bids,
-        price: data.bidAmount
+        price: data.price
       })
     }).catch(err => {
       console.log('error submitting bid', err);
@@ -57,7 +59,7 @@ class App extends React.Component {
 
   addWatcher() {
     axios.post('/api/auction', {
-      name: this.state.name
+      id: this.state.id
     }).then(data => {
       console.log('now watching item');
       this.componentDidMount();
