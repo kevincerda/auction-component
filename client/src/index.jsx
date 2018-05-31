@@ -45,9 +45,10 @@ class App extends React.Component {
 
   handleBidSubmit() {
     axios.post('/api/auction/bid', {
+      name: this.state.name,
       bidAmount: this.state.bidAmount
-    }).then(data => {
-      if (data) {
+    }).then(success => {
+      if (success) {
         axios.get('/api/auction/bid')
           .then(({ data }) => {
             this.setState({

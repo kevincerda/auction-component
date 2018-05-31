@@ -36,12 +36,8 @@ const Product = db.define('product', {
 });
 
 const Bid = db.define('bid', {
-  product_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Product,
-      key: 'id'
-    },
+  productName: {
+    type: Sequelize.STRING,
     allowNull: false
   },
 
@@ -50,6 +46,9 @@ const Bid = db.define('bid', {
     allowNull: false
   }
 })
+
+Product.hasMany(Bid, {foreignKey: 'productName', sourceKey: 'name'});
+Bid.belongsTo(Product, {foreignKey: 'productName', sourceKey: 'name'});
 
 db.sync()
   .then(() => console.log('synced db'))

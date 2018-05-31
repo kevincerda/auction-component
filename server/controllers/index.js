@@ -30,7 +30,10 @@ const AuctionController = {
 
 const BidController = {
   'GET': (req, res) => {
-
+    //grab highest bid amount from column amount in bid table
+    //get total number of bids made for an item
+    //put both of these items in an object in the format: {amount: x, bids: y}
+    Bid.find()
   },
 
   'POST': (req, res) => {
