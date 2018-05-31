@@ -51,6 +51,10 @@ const Bid = db.define('bid', {
   }
 })
 
+db.sync()
+  .then(() => console.log('synced db'))
+  .catch(err => console.log('error syncing db', err))
+
 module.exports = {
   Product: Product,
   Bid: Bid
