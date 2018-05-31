@@ -63,8 +63,9 @@ class App extends React.Component {
 
   addWatcher() {
     axios.post('/api/auction', {
-      addWatcher: true
+      name: this.state.name
     }).then(data => {
+      console.log('now watching item');
       this.componentDidMount();
     }).catch(err => {
       console.log('we\'re sorry, there was an error when trying to add this item to your watchlist');
