@@ -45,8 +45,16 @@ const Bid = db.define('bid', {
 Product.hasMany(Bid);
 Bid.belongsTo(Product);
 
-db.sync({ force: true })
-  .then(() => console.log('synced db'))
+db.sync()
+  .then(() => {
+    Product.create({
+      productName: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter',
+      condition: 'used',
+      minimum: 5.00,
+      watchers: 8,
+      endtime: new Date(2018, 6, 10, 0)
+    });
+  })
   .catch(err => console.log('error syncing db', err))
 
 module.exports = {

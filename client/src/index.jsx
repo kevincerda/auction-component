@@ -9,22 +9,20 @@ class App extends React.Component {
       bidAmount: 0,
       name: '',
       condition: '',
-      price: 0.00,
-      minimum: 0.00,
+      price: 0,
+      minimum: 0,
       bids: 0,
       watchers: 0,
       endtime: '0d0h'
     }
-    this.componentDidMount = this.bind.componentDidMount(this);
-    this.handleChange = this.bind.handleChange(this);
-    this.handleSubmit = this.bind.handleSubmit(this);
-    this.addWatcher = this.bind.addWatcher(this);
+    this.handleBidChange = this.handleBidChange.bind(this);
+    this.handleBidSubmit = this.handleBidSubmit.bind(this);
+    this.addWatcher = this.addWatcher.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/auction', {
-      name: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter'
-    }).then(({ data }) => {
+    axios.get('/api/auction')
+    .then(({ data }) => {
       this.setState({
         name: data.productName,
         condition: data.condition,
@@ -46,17 +44,12 @@ class App extends React.Component {
   handleBidSubmit() {
     axios.post('/api/auction/bid', {
       name: this.state.name,
-      bidAmount: this.state.bidAmount
-    }).then(success => {
-      if (success) {
-        axios.get('/api/auction/bid')
-          .then(data => {
-            this.setState({
-              price: data.amount,
-              bids: data.bids
-            })
-          })
-      }
+      bidAmount: Number(this.state.bidAmount)
+    }).then(({ data }) => {
+      this.setState({
+        bids: data.bids,
+        price: data.bidAmount
+      })
     }).catch(err => {
       console.log('error submitting bid', err);
     })
@@ -77,16 +70,16 @@ class App extends React.Component {
     return (
       <div>
         <div id="name">{this.state.name}</div>
-        <div id="watchers">{this.state.watchers}</div>
-        <div id="condition">{this.state.condition}</div>
-        <form id="bid-form" onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange}/>
+        <div id="watchers">Watchers: {this.state.watchers}</div>
+        <div id="condition">Condition: {this.state.condition}</div>
+        <form id="bid-form" onSubmit={this.handleBidSubmit}>
+          <input onChange={this.handleBidChange}/>
           <button>Make Offer</button>
         </form>
         <div id="bids">Bids made: {this.props.bids}</div>
-        <div id="price">Current Price: {this.state.price}</div>
-        <div id="minimum">{this.state.minimum}</div>
-        <div id="endtime">{this.state.endtime}</div>
+        <div id="price">Current Bid: {this.state.price}</div>
+        <div id="minimum">Minimum Bid: {this.state.minimum}</div>
+        <div id="endtime">Bid Ends: {this.state.endtime}</div>
         <div id="watchers-button">
           <button onClick={this.addWatcher}>Watch this item</button>
         </div>

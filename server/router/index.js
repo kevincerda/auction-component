@@ -6,7 +6,7 @@ router.route('/auction')
   .post(AuctionController.POST)
 
 router.route('/auction/bid')
-  .get(BidController.GET)
+  // .get(BidController.GET)
   .post(BidController.POST)
 
 module.exports = {
