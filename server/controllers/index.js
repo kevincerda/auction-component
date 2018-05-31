@@ -55,7 +55,23 @@ const BidController = {
   },
 
   'POST': (req, res) => {
-    
+    Product.find({
+      where: {
+        productName: req.body.name
+      }
+    }).then(item => {
+      if (item) {
+        item.createBid({
+          amount: req.body.bidAmount
+        }).then(data => {
+          res.status(201).send(data);
+        }).catch(err => {
+          res.status(400).send(err);
+        })
+      }
+    }).catch(err => {
+      console.log('could not find product in db', err);
+    })
   }
 };
 
