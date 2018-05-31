@@ -26,7 +26,7 @@ class App extends React.Component {
       name: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter'
     }).then(({ data }) => {
       this.setState({
-        name: data.name,
+        name: data.productName,
         condition: data.condition,
         minimum: data.minimum,
         watchers: data.watchers,
@@ -50,7 +50,7 @@ class App extends React.Component {
     }).then(success => {
       if (success) {
         axios.get('/api/auction/bid')
-          .then(({ data }) => {
+          .then(data => {
             this.setState({
               price: data.amount,
               bids: data.bids

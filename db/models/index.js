@@ -9,7 +9,7 @@ const Product = db.define('product', {
     allowNull: false
   },
 
-  name: {
+  productName: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -36,21 +36,16 @@ const Product = db.define('product', {
 });
 
 const Bid = db.define('bid', {
-  productName: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-
   amount: {
     type: Sequelize.DOUBLE,
     allowNull: false
   }
-})
+});
 
-Product.hasMany(Bid, {foreignKey: 'productName', sourceKey: 'name'});
-Bid.belongsTo(Product, {foreignKey: 'productName', sourceKey: 'name'});
+Product.hasMany(Bid);
+Bid.belongsTo(Product);
 
-db.sync()
+db.sync({ force: true })
   .then(() => console.log('synced db'))
   .catch(err => console.log('error syncing db', err))
 

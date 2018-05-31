@@ -4,7 +4,7 @@ const AuctionController = {
   'GET': (req, res) => {
     Product.find({
       where: {
-        name: req.body.name
+        productName: req.body.name
       }
     }).then(data => {
       res.status(200).send(data);
@@ -18,7 +18,7 @@ const AuctionController = {
       watchers: Sequelize.literal('watchers + 1')
     }, {
       where: {
-        name: req.body.name
+        productName: req.body.name
       }
     }).then(() => {
       res.status(201).send('successfully updated watchers');
@@ -30,14 +30,32 @@ const AuctionController = {
 
 const BidController = {
   'GET': (req, res) => {
-    //grab highest bid amount from column amount in bid table
-    //get total number of bids made for an item
-    //put both of these items in an object in the format: {amount: x, bids: y}
-    Bid.find()
+    Product.findAndCountAll({
+      include: [{
+        model: 'Bid'
+      }, {
+        where: {
+          'productId': Sequelize.col('id')
+        }
+      }]
+    }).then(count => {
+      Product.getBid({
+        where: {
+          amount: Sequelize.fn('max', Sequelize.col('amount'))
+        }
+      }).then(bid => {
+        let result = {};
+        result.amount = bid.data.amount;
+        result.bids = count;
+        res.status(200).send(result);
+      }).catch(err => {
+        res.status(404).send(err);
+      })
+    })
   },
 
   'POST': (req, res) => {
-
+    
   }
 };
 
