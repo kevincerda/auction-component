@@ -58,7 +58,3 @@ module.exports = {
   AuctionController: AuctionController,
   BidController: BidController
 };
-
-//eventually want to make a request to the product's id in the endpoint
-  //get request from /api/auction/bid/:id
-  //req.params (test with postman)
