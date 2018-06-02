@@ -112,35 +112,34 @@ class Auction extends React.Component {
         <div styleName="item-name">{this.state.name}</div><hr />
         <div>
           <div>
-            <div styleName="property">Condition: </div>
-            <div styleName="detail">{this.state.condition}</div>
+            <div styleName="col-1">Condition: </div>
+            <div styleName="col-2">{this.state.condition}</div>
           </div>
           <div>
-            <div styleName="property">Time left: </div>
-            <div styleName="detail">{this.state.daysLeft}d {this.state.hoursLeft}h</div>
+            <div styleName="col-1">Time left: </div>
+            <div styleName="col-2">{this.state.daysLeft}d {this.state.hoursLeft}h</div>
           </div>
         </div>
         <div styleName="bid-container">
           <div>
-            <div styleName="property">Current bid: </div>
-            <div styleName="detail">${this.state.currentBid}</div>
-            <div styleName="extra">[ <a href="#">{this.state.bids} bids </a> ]</div>
+            <div styleName="col-1">Current bid: </div>
+            <div styleName="col-2">${this.state.currentBid}</div>
+            <div styleName="col-3">[ <a href="#">{this.state.bids} bids </a> ]</div>
           </div>
           <form onSubmit={this.handleBidSubmit}>
-            <div styleName="property"></div>
-            <div styleName="detail"><input onChange={this.handleBidChange}/></div>
-            <div styleName="extra"><button>Place Bid</button></div>
+            <div styleName="col-1"></div>
+            <div styleName="col-2"><input onChange={this.handleBidChange}/></div>
+            <div styleName="col-3"><button>Place Bid</button></div>
           </form>
           <div>
-            <div styleName="property"></div>
-            <div styleName="detail">Enter ${Number(this.state.currentBid) + 0.01} or more</div>
-            <div styleName="extra"></div>
+            <div styleName="col-1"></div>
+            <div styleName="col-2">Enter ${Number(this.state.currentBid) + 0.01} or more</div>
+            <div styleName="col-3"></div>
           </div>
-          <div>Minimum Bid: {this.state.minimum}</div>
           <div>
-            <div styleName="property"></div>
-            <div styleName="detail"></div>
-            <div styleName="extra">
+            <div styleName="col-1"></div>
+            <div styleName="col-2"></div>
+            <div styleName="col-3">
               <button onClick={this.addWatcher}>Add to watch list</button>
             </div>
           </div>

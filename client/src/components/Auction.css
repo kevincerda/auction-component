@@ -25,20 +25,20 @@ hr {
   background-color: rgba(230, 230, 230, 0.966);
 }
 
-.property {
+.col-1 {
   display: inline-block;
   width: 20%;
   text-align: right;
 }
 
-.detail {
+.col-2 {
   display: inline-block;
   width: 30%;
   margin-left: 8px;
   text-align: left;
 }
 
-.extra {
+.col-3 {
   display: inline-block;
   width: auto;
   text-align: left;
