@@ -1,28 +1,24 @@
 const Sequelize = require('sequelize');
 const { db } = require('../config');
-const { initialize } = require('../seed/seed');
+const { productSeeds, bidSeeds } = require('../seeds/seed');
 
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
   },
-
   condition: {
     type: Sequelize.STRING,
     allowNull: false
   },
-
   minimum: {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
-
   watchers: {
     type: Sequelize.INTEGER,
     allowNull: true
   },
-
   endtime: {
     type: Sequelize.DATE,
     allowNull: false
@@ -39,9 +35,11 @@ const Bid = db.define('bid', {
 Product.hasMany(Bid);
 Bid.belongsTo(Product);
 
-db.sync()
-  .then(initialize.product()).then(initialize.bid()).then(() => console.log('successfully synced to db'))
-  .catch(err => console.log('error syncing db', err))
+db.sync({force: true})
+  .then(() => console.log('successfully connected to db'))
+  .then(() => db.queryInterface.bulkInsert('products', productSeeds))
+  .then(() => db.queryInterface.bulkInsert('bids', bidSeeds))
+  .catch(err => console.log('error syncing database', err))
 
 module.exports = {
   Product: Product,

@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const Sequelize = require('sequelize');
 const { router } = require('./router');
-require('../db/models');
+require('../database/models');
 
 const port = 8000;
 const app = express();
@@ -16,6 +17,6 @@ app.listen(port, (err) => {
   if (err) {
     console.log('error connecting to port', port);
   } else {
-    console.log('successfully connected to port', port);
+    console.log('error syncing to db', err);
   }
 });

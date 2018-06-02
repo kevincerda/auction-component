@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('auction', 'root', '', {
+const db = new Sequelize('auction', 'Joseph', '', {
   host: 'localhost',
   dialect: 'postgres'
 });
@@ -8,7 +8,7 @@ const db = new Sequelize('auction', 'root', '', {
 db.authenticate()
   .then(() => console.log('db authenticated'))
   .catch(err => console.log('error authenticating db'))
-
+  
 module.exports = {
   db: db
 };
