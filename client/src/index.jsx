@@ -9,19 +9,25 @@ class App extends React.Component {
       id: 0,
       name: '',
       condition: '',
-      price: 0,
+      currentBid: 0,
       minimum: 0,
       watchers: 0,
       endtime: '0d0h',
       bids: 0,
       bidAmount: 0
     }
+    this.fetchProductInfo = this.fetchProductInfo.bind(this);
+    this.fetchProductBids = this.fetchProductBids.bind(this);
     this.handleBidChange = this.handleBidChange.bind(this);
     this.handleBidSubmit = this.handleBidSubmit.bind(this);
     this.addWatcher = this.addWatcher.bind(this);
   }
 
   componentDidMount() {
+    this.fetchProductInfo();
+  }
+
+  fetchProductInfo() {
     axios.get('/api/auction')
     .then(({ data }) => {
       this.setState({
@@ -32,8 +38,23 @@ class App extends React.Component {
         watchers: data.watchers,
         endtime: data.endtime
       })
+    }).then(() => {
+      this.fetchProductBids();
     }).catch(err => {
       console.log('error fetching product data', err);
+    })
+  }
+
+  fetchProductBids() {
+    axios.get('/api/auction/bid')
+    .then(({ data }) => {
+      console.log(data[0])
+      this.setState({
+        bids: data[0],
+        currentBid: data[1]
+      })
+    }).catch(err => {
+      console.log('error fetching product bids', err);
     })
   }
 
@@ -50,7 +71,7 @@ class App extends React.Component {
     }).then(data => {
       this.setState({
         bids: data.bids,
-        price: data.price
+        currentBid: data.currentBid
       })
     }).catch(err => {
       console.log('error submitting bid', err);
@@ -78,8 +99,8 @@ class App extends React.Component {
           <input onChange={this.handleBidChange}/>
           <button>Make Offer</button>
         </form>
-        <div id="bids">Bids made: {this.props.bids}</div>
-        <div id="price">Current Bid: {this.state.price}</div>
+        <div id="bids">Bids made: {this.state.bids}</div>
+        <div id="currentBid">Current Bid: {this.state.currentBid}</div>
         <div id="minimum">Minimum Bid: {this.state.minimum}</div>
         <div id="endtime">Bid Ends: {this.state.endtime}</div>
         <div id="watchers-button">

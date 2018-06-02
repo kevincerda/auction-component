@@ -1,12 +1,11 @@
 const Sequelize = require('sequelize');
+const Promise = require('bluebird');
 const { Product, Bid } = require('../../database/models');
 
 const AuctionController = {
   'GET': (req, res) => {
     Product.find({
-      where: {
-        name: 'Eachine E58 2MP 720P Camera WIFI FPV Foldable Drone 2.4G 6-Axis RC Quadcopter'
-      }
+      where: { id: 1 }
     }).then(data => {
       res.status(200).send(data);
     }).catch(err => {
@@ -18,9 +17,7 @@ const AuctionController = {
     Product.update({
       watchers: Sequelize.literal('watchers + 1')
     }, {
-      where: {
-        id: req.body.id
-      }
+      where: { id: req.body.id }
     }).then(() => {
       res.status(201).send('successfully updated watchers');
     }).catch(err => {
@@ -31,21 +28,12 @@ const AuctionController = {
 
 const BidController = {
   'GET': (req, res) => {
-    let bidCount = 0;
-    Bid.count({
-      where: {
-        productId: req.body.id
-      }
-    }).then(count => {
-      bidCount = count;
-      Bid.max({
-        where: {
-          productId: req.body.id
-        }
-      })
-    }).then(max => {
-      res.status(201).send();
-      console.log('*******************COUNT = ', count);
+    let data = {};
+    Promise.all([
+      Bid.count({ where: { productId: 1 }}),
+      Bid.max('amount', { where: { productId: 1 }})
+    ]).then(data => {
+      res.status(200).send(data);
     }).catch(err => {
       res.status(404).send(err);
     })
@@ -53,9 +41,7 @@ const BidController = {
 
   'POST': (req, res) => {
     Product.find({
-      where: {
-        name: req.body.name
-      }
+      where: { id: req.body.id }
     }).then(foundProduct => {
       foundProduct.createBid({
         amount: req.body.bidAmount
@@ -73,22 +59,14 @@ module.exports = {
   BidController: BidController
 };
 
-
-//in client
-//add a handler for getting highest bid and bid count
-  //get request from /api/auction/bid/:id
-  //req.params (test with postman)
-  //check the syntax of url
-//chain the get request for /bid/:id to the post request
-//figure out how to display time left for auction
-
 //in controller
-//see if i can chain together count and max somehow and send them back together in 1 object
-  //console logs to see that i am sending back the correct data
-//see that page is rendering dynamically on bid post
-  //add a conditional that only allows user to post if the bid is higher than value in db and also is above
-  //the minimum bid value
-  //see if i can refactor the post so that I dont initially have to query the product table and then create
-  //the bid off of that found instance
 //fix AuctionController.post, watchers doesnt seem to update
   //if not using sequelize function, remove from first line
+//add a conditional that only allows user to post if the bid is higher than value in db and also is above
+//the minimum bid value
+
+//in client
+//eventually want to make a request to the product's id in the endpoint
+  //get request from /api/auction/bid/:id
+  //req.params (test with postman)
+//display time left for auction, not the time it ends
