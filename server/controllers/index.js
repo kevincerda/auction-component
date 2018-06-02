@@ -59,13 +59,6 @@ module.exports = {
   BidController: BidController
 };
 
-//in controller
-//fix AuctionController.post, watchers doesnt seem to update
-  //if not using sequelize function, remove from first line
-//add a conditional that only allows user to post if the bid is higher than value in db and also is above
-//the minimum bid value
-
-//in client
 //eventually want to make a request to the product's id in the endpoint
   //get request from /api/auction/bid/:id
   //req.params (test with postman)

@@ -65,17 +65,23 @@ class App extends React.Component {
   }
 
   handleBidSubmit() {
-    axios.post('/api/auction/bid', {
-      id: this.state.id,
-      bidAmount: this.state.bidAmount
-    }).then(data => {
-      this.setState({
-        bids: data.bids,
-        currentBid: data.currentBid
+    if (this.state.bidAmount < this.state.minimum) {
+      alert ('Invalid bid, your bid is below the minimum')
+    } else if (this.state.bidAmount < this.state.currentBid) {
+      alert ('Invalid bid, your bid is lower than the current bid')
+    } else {
+      axios.post('/api/auction/bid', {
+        id: this.state.id,
+        bidAmount: this.state.bidAmount
+      }).then(data => {
+        this.setState({
+          bids: data.bids,
+          currentBid: data.currentBid
+        })
+      }).catch(err => {
+        console.log('error submitting bid', err);
       })
-    }).catch(err => {
-      console.log('error submitting bid', err);
-    })
+    }
   }
 
   addWatcher() {
