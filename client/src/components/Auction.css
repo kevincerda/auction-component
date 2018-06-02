@@ -1,4 +1,49 @@
+div {
+  font-family: "Helvetica neue", Helvetica, Verdana, Sans-serif;
+  font-size: 14px;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid gray;
+}
+
+.auction-container {
+  width: 600px;
+}
+
 .item-name {
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
+}
+
+.bid-container {
+  height: auto;
+  width: 600px;
+  background-color: rgba(230, 230, 230, 0.966);
+}
+
+.property {
+  display: inline-block;
+  width: 20%;
+  text-align: right;
+}
+
+.detail {
+  display: inline-block;
+  width: 30%;
+  margin-left: 8px;
+  text-align: left;
+}
+
+.extra {
+  display: inline-block;
+  width: auto;
+  text-align: left;
+}
+
+.watchers {
+  text-align: center;
 }

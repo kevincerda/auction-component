@@ -108,31 +108,47 @@ class Auction extends React.Component {
 
   render() {
     return (
-      <div>
-        <div styleName="item-name">{this.state.name}</div>
-        <div>
-          <div id="condition">Condition: {this.state.condition}</div>
-          <div id="time-left">Time left: {this.state.daysLeft} d {this.state.hoursLeft} h</div>
-        </div>
+      <div styleName="auction-container">
+        <div styleName="item-name">{this.state.name}</div><hr />
         <div>
           <div>
-            <span id="currentBid">Current bid: ${this.state.currentBid}</span>
-            <span id="bids">[ <a href="#">{this.state.bids} bids </a> ]</span>
+            <div styleName="property">Condition: </div>
+            <div styleName="detail">{this.state.condition}</div>
           </div>
-          <form id="bid-form" onSubmit={this.handleBidSubmit}>
-            <span><input onChange={this.handleBidChange}/></span>
-            <span><button>Place Bid</button></span>
-            <div>Enter ${Number(this.state.currentBid) + 0.01} or more</div>
+          <div>
+            <div styleName="property">Time left: </div>
+            <div styleName="detail">{this.state.daysLeft}d {this.state.hoursLeft}h</div>
+          </div>
+        </div>
+        <div styleName="bid-container">
+          <div>
+            <div styleName="property">Current bid: </div>
+            <div styleName="detail">${this.state.currentBid}</div>
+            <div styleName="extra">[ <a href="#">{this.state.bids} bids </a> ]</div>
+          </div>
+          <form onSubmit={this.handleBidSubmit}>
+            <div styleName="property"></div>
+            <div styleName="detail"><input onChange={this.handleBidChange}/></div>
+            <div styleName="extra"><button>Place Bid</button></div>
           </form>
-          <div id="minimum">Minimum Bid: {this.state.minimum}</div>
-          <div id="watchers-button">
-            <button onClick={this.addWatcher}>Add to watch list</button>
+          <div>
+            <div styleName="property"></div>
+            <div styleName="detail">Enter ${Number(this.state.currentBid) + 0.01} or more</div>
+            <div styleName="extra"></div>
           </div>
-        <div id="watchers">{this.state.watchers} watchers</div>
+          <div>Minimum Bid: {this.state.minimum}</div>
+          <div>
+            <div styleName="property"></div>
+            <div styleName="detail"></div>
+            <div styleName="extra">
+              <button onClick={this.addWatcher}>Add to watch list</button>
+            </div>
+          </div>
+          <div styleName="watchers">{this.state.watchers} watchers</div>
         </div>
       </div>
     )
   }
 }
 
-export default Auction;
+export default CSSModules(Auction, styles);
