@@ -12,7 +12,9 @@ class App extends React.Component {
       currentBid: 0,
       minimum: 0,
       watchers: 0,
-      endtime: '0d0h',
+      daysLeft: 0,
+      hoursLeft: 0,
+      minutesLeft: 0,
       bids: 0,
       bidAmount: 0
     }
@@ -30,13 +32,26 @@ class App extends React.Component {
   fetchProductInfo() {
     axios.get('/api/auction')
     .then(({ data }) => {
+      const day = 24 * 60 * 60 * 1000;
+      const hour = 60 * 60 * 1000;
+      const minute = 60 * 1000;
+
+      let end = new Date(Date.parse(data.createdAt));
+      end.setDate(end.getDate() + 7);
+      let timeLeft = Math.floor((end - new Date()));
+      let daysLeft = Math.floor(timeLeft / day);
+      let hoursLeft = Math.floor((timeLeft - daysLeft * day) / hour);
+      let minutesLeft = Math.floor((timeLeft - daysLeft * day - hoursLeft * hour) / minute);
+
       this.setState({
         id: data.id,
         name: data.name,
         condition: data.condition,
         minimum: data.minimum,
         watchers: data.watchers,
-        endtime: data.endtime
+        daysLeft: daysLeft,
+        hoursLeft: hoursLeft,
+        minutesLeft: minutesLeft
       })
     }).then(() => {
       this.fetchProductBids();
@@ -48,7 +63,6 @@ class App extends React.Component {
   fetchProductBids() {
     axios.get('/api/auction/bid')
     .then(({ data }) => {
-      console.log(data[0])
       this.setState({
         bids: data[0],
         currentBid: data[1]
@@ -66,9 +80,9 @@ class App extends React.Component {
 
   handleBidSubmit() {
     if (this.state.bidAmount < this.state.minimum) {
-      alert ('Invalid bid, your bid is below the minimum')
+      alert ('Invalid bid, your bid is below the minimum');
     } else if (this.state.bidAmount < this.state.currentBid) {
-      alert ('Invalid bid, your bid is lower than the current bid')
+      alert ('Invalid bid, your bid is lower than the current bid');
     } else {
       axios.post('/api/auction/bid', {
         id: this.state.id,
@@ -108,7 +122,7 @@ class App extends React.Component {
         <div id="bids">Bids made: {this.state.bids}</div>
         <div id="currentBid">Current Bid: {this.state.currentBid}</div>
         <div id="minimum">Minimum Bid: {this.state.minimum}</div>
-        <div id="endtime">Bid Ends: {this.state.endtime}</div>
+        <div id="time-left">Bid Ends In: {this.state.daysLeft} days {this.state.hoursLeft} hrs {this.state.minutesLeft} mins</div>
         <div id="watchers-button">
           <button onClick={this.addWatcher}>Watch this item</button>
         </div>

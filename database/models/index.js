@@ -18,10 +18,6 @@ const Product = db.define('product', {
   watchers: {
     type: Sequelize.INTEGER,
     allowNull: true
-  },
-  endtime: {
-    type: Sequelize.DATE,
-    allowNull: false
   }
 });
 
