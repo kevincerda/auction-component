@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import CSSModules from 'react-css-modules';
 import styles from './Auction.css';
 
@@ -23,14 +24,9 @@ class Auction extends React.Component {
   fetchProductInfo() {
     axios.get('/api/auction/product/id/' + this.state.id)
     .then(({ data }) => {
-
-      const day = 24 * 60 * 60 * 1000;
-      const hour = 60 * 60 * 1000;
-      let endDate = new Date(Date.parse(data.createdAt));
-      let end = endDate.setDate(endDate.getDate() + 7);
-      let timeLeft = Math.floor((end - new Date()));
-      let daysLeft = Math.floor(timeLeft / day);
-      let hoursLeft = Math.floor((timeLeft - daysLeft * day) / hour);
+      console.log(moment());
+      let endDate = moment(data.createdAt).add(7, 'days');
+      let timeLeft = moment.duration(endDate.diff(moment()));
 
       this.setState({
         id: data.id,
@@ -38,9 +34,9 @@ class Auction extends React.Component {
         condition: data.condition,
         minimum: data.minimum,
         watchers: data.watchers,
-        daysLeft: daysLeft,
-        hoursLeft: hoursLeft,
-        endDate: JSON.stringify(endDate)
+        daysLeft: timeLeft.days(),
+        hoursLeft: timeLeft.hours(),
+        endDate: endDate.format('dddd, h:mmA')
       })
 
     }).then(() => {
