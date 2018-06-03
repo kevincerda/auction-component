@@ -21,7 +21,7 @@ class Auction extends React.Component {
   }
 
   fetchProductInfo() {
-    axios.get('/api/auction/product/' + this.state.id)
+    axios.get('/api/auction/product/id/' + this.state.id)
     .then(({ data }) => {
       const day = 24 * 60 * 60 * 1000;
       const hour = 60 * 60 * 1000;

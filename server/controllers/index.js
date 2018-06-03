@@ -4,10 +4,14 @@ const { Product, Bid } = require('../../database/models');
 
 const AuctionController = {
   'GET': (req, res) => {
-    console.log('getting into controller')
-    console.log(req.params);
+    let query = {};
+    if (req.params.id) {
+      query.id = req.params.id;
+    } else if (req.params.name) {
+      query.name = req.params.name
+    }
     Product.find({
-      where: { id: req.params.id }
+      where: query
     }).then(data => {
       res.status(200).send(data);
     }).catch(err => {
