@@ -11,7 +11,7 @@ class Auction extends React.Component {
       id: 1
     }
     this.fetchProductInfo = this.fetchProductInfo.bind(this);
-    this.fetchProductBids = this.fetchProductBids.bind(this);
+    this.fetchBids = this.fetchBids.bind(this);
     this.handleBidChange = this.handleBidChange.bind(this);
     this.handleBidSubmit = this.handleBidSubmit.bind(this);
     this.addWatcher = this.addWatcher.bind(this);
@@ -40,13 +40,13 @@ class Auction extends React.Component {
       })
 
     }).then(() => {
-      this.fetchProductBids();
+      this.fetchBids();
     }).catch(err => {
       console.log('error fetching product data', err);
     })
   }
 
-  fetchProductBids() {
+  fetchBids() {
     axios.get('/api/auction/bid')
     .then(({ data }) => {
       let bidCount = data[0] + ' bid';
