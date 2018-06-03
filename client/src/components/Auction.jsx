@@ -25,7 +25,6 @@ class Auction extends React.Component {
     .then(({ data }) => {
       const day = 24 * 60 * 60 * 1000;
       const hour = 60 * 60 * 1000;
-
       let end = new Date(Date.parse(data.createdAt));
       end.setDate(end.getDate() + 7);
       let timeLeft = Math.floor((end - new Date()));
@@ -39,7 +38,8 @@ class Auction extends React.Component {
         minimum: data.minimum,
         watchers: data.watchers,
         daysLeft: daysLeft,
-        hoursLeft: hoursLeft
+        hoursLeft: hoursLeft,
+        endDate: end
       })
     }).then(() => {
       this.fetchProductBids();
@@ -71,6 +71,8 @@ class Auction extends React.Component {
       alert ('Invalid bid, your bid is below the minimum');
     } else if (this.state.bidAmount < this.state.currentBid) {
       alert ('Invalid bid, your bid is lower than the current bid');
+    } else if (!(new Date() - this.state.endDate)) {
+      alert ('This auction has ended');
     } else {
       axios.post('/api/auction/bid', {
         id: this.state.id,
