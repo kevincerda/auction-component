@@ -24,7 +24,6 @@ class Auction extends React.Component {
   fetchProductInfo() {
     axios.get('/api/auction/product/id/' + this.state.id)
     .then(({ data }) => {
-      console.log(moment());
       let endDate = moment(data.createdAt).add(7, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
 
@@ -36,6 +35,7 @@ class Auction extends React.Component {
         watchers: data.watchers,
         daysLeft: timeLeft.days(),
         hoursLeft: timeLeft.hours(),
+        secondsLeft: timeLeft.seconds(),
         endDate: endDate.format('dddd, h:mmA')
       })
 
@@ -49,8 +49,12 @@ class Auction extends React.Component {
   fetchProductBids() {
     axios.get('/api/auction/bid')
     .then(({ data }) => {
+      let bidCount = data[0] + ' bid';
+      if (data[0] > 1) {
+        bidCount = data[0] + ' bids';
+      }
       this.setState({
-        bids: data[0],
+        bids: bidCount,
         currentBid: data[1].toFixed(2)
       })
     }).catch(err => {
@@ -69,15 +73,19 @@ class Auction extends React.Component {
       alert ('Invalid bid, your bid is below the minimum');
     } else if (this.state.bidAmount < this.state.currentBid) {
       alert ('Invalid bid, your bid is lower than the current bid');
-    } else if (!(new Date() - this.state.endDate)) {
+    } else if (!this.state.secondsLeft) {
       alert ('This auction has ended');
     } else {
       axios.post('/api/auction/bid', {
         id: this.state.id,
         bidAmount: this.state.bidAmount
       }).then(data => {
+        let bidCount = data.bids + ' bid';
+        if (data[0] > 1) {
+          bidCount = data.bids + ' bids';
+        }
         this.setState({
-          bids: data.bids,
+          bids: bidCount,
           currentBid: data.currentBid
         })
       }).catch(err => {
@@ -113,7 +121,7 @@ class Auction extends React.Component {
           <div>
             <div styleName="col-1">Current bid: </div>
             <div styleName="col-2"><span styleName="current-bid">${this.state.currentBid}</span></div>
-            <div styleName="col-3">[ <a href="#">{this.state.bids} bids </a> ]</div>
+            <div styleName="col-3">[ <a href="#">{this.state.bids}</a> ]</div>
           </div>
           <div styleName="bid-form">
             <form onSubmit={this.handleBidSubmit}>
