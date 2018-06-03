@@ -7,7 +7,7 @@ class Auction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
+      id: 1,
       name: '',
       condition: '',
       currentBid: 0,
@@ -30,8 +30,9 @@ class Auction extends React.Component {
   }
 
   fetchProductInfo() {
-    axios.get('/api/auction')
-    .then(({ data }) => {
+    axios.get('/api/auction', {
+      id: this.state.id
+    }).then(({ data }) => {
       const day = 24 * 60 * 60 * 1000;
       const hour = 60 * 60 * 1000;
 

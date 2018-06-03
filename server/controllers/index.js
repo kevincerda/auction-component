@@ -5,7 +5,7 @@ const { Product, Bid } = require('../../database/models');
 const AuctionController = {
   'GET': (req, res) => {
     Product.find({
-      where: { id: 1 }
+      where: { id: req.body.id }
     }).then(data => {
       res.status(200).send(data);
     }).catch(err => {
