@@ -59,6 +59,14 @@ a:hover {
 .condition {
   font-weight: bold;
 }
+.end-time {
+  display: inline-block;
+  margin-left: 12px;
+  text-align: left;
+}
+.end-date {
+  font-size: 10px;
+}
 .current-bid {
   font-size: 18px;
   font-weight: bold;

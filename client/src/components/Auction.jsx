@@ -26,8 +26,8 @@ class Auction extends React.Component {
 
       const day = 24 * 60 * 60 * 1000;
       const hour = 60 * 60 * 1000;
-      let end = new Date(Date.parse(data.createdAt));
-      end.setDate(end.getDate() + 7);
+      let endDate = new Date(Date.parse(data.createdAt));
+      let end = endDate.setDate(endDate.getDate() + 7);
       let timeLeft = Math.floor((end - new Date()));
       let daysLeft = Math.floor(timeLeft / day);
       let hoursLeft = Math.floor((timeLeft - daysLeft * day) / hour);
@@ -40,7 +40,7 @@ class Auction extends React.Component {
         watchers: data.watchers,
         daysLeft: daysLeft,
         hoursLeft: hoursLeft,
-        endDate: end
+        endDate: JSON.stringify(endDate)
       })
 
     }).then(() => {
@@ -93,7 +93,6 @@ class Auction extends React.Component {
   addWatcher() {
     axios.post('/api/auction/product/id/' + this.state.id)
     .then(data => {
-      console.log('watching item');
       this.componentDidMount();
     }).catch(err => {
       console.log('we\'re sorry, there was an error when trying to add this item to your watchlist');
@@ -111,7 +110,7 @@ class Auction extends React.Component {
           </div>
           <div>
             <div styleName="col-1">Time left: </div>
-            <div styleName="col-2">{this.state.daysLeft}d {this.state.hoursLeft}h</div>
+            <div styleName="end-time">{this.state.daysLeft}d {this.state.hoursLeft}h <span styleName="end-date">{this.state.endDate}</span></div>
           </div>
         </div>
         <div styleName="bid-container">
