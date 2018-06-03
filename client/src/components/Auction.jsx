@@ -69,12 +69,15 @@ class Auction extends React.Component {
   }
 
   handleBidSubmit() {
-    if (this.state.bidAmount < this.state.minimum) {
+    let regex = /^[1-9]\d*(?:\.\d{0,2})$/;
+    if (!this.state.secondsLeft) {
+      alert ('This auction has ended');
+    } else if (!regex.test(this.state.bidAmount)) {
+      alert ('Please enter a valid bid amount')
+    } else if (this.state.bidAmount < this.state.minimum) {
       alert ('Invalid bid, your bid is below the minimum');
     } else if (this.state.bidAmount < this.state.currentBid) {
       alert ('Invalid bid, your bid is lower than the current bid');
-    } else if (!this.state.secondsLeft) {
-      alert ('This auction has ended');
     } else {
       axios.post('/api/auction/bid', {
         id: this.state.id,
