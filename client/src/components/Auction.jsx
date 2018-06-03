@@ -23,6 +23,7 @@ class Auction extends React.Component {
   fetchProductInfo() {
     axios.get('/api/auction/product/id/' + this.state.id)
     .then(({ data }) => {
+
       const day = 24 * 60 * 60 * 1000;
       const hour = 60 * 60 * 1000;
       let end = new Date(Date.parse(data.createdAt));
@@ -41,6 +42,7 @@ class Auction extends React.Component {
         hoursLeft: hoursLeft,
         endDate: end
       })
+
     }).then(() => {
       this.fetchProductBids();
     }).catch(err => {
@@ -89,10 +91,9 @@ class Auction extends React.Component {
   }
 
   addWatcher() {
-    axios.post('/api/auction', {
-      id: this.state.id
-    }).then(data => {
-      console.log('now watching item');
+    axios.post('/api/auction/product/id/' + this.state.id)
+    .then(data => {
+      console.log('watching item');
       this.componentDidMount();
     }).catch(err => {
       console.log('we\'re sorry, there was an error when trying to add this item to your watchlist');

@@ -20,10 +20,16 @@ const AuctionController = {
   },
 
   'POST': (req, res) => {
+    let query = {};
+    if (req.params.id) {
+      query.id = req.params.id;
+    } else if (req.params.name) {
+      query.name = req.params.name
+    }
     Product.update({
       watchers: Sequelize.literal('watchers + 1')
     }, {
-      where: { id: req.body.id }
+      where: query
     }).then(() => {
       res.status(201).send('successfully updated watchers');
     }).catch(err => {
