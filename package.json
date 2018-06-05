@@ -1,7 +1,7 @@
 {
   "name": "auction-component",
   "version": "1.0.0",
-  "description": "",
+  "description": "Service allowing users to watch a product or bid in the auction",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,6 +23,7 @@
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-es2105": "0.0.0",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
@@ -39,6 +40,10 @@
     "style-loader": "^0.21.0"
   },
   "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^23.1.0",
+    "jest-enzyme": "^6.0.1",
     "webpack": "^4.10.2",
     "webpack-cli": "^2.1.4"
   }
