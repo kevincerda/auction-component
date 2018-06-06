@@ -142,7 +142,7 @@ class Auction extends React.Component {
             <div styleName="col-1"></div>
             <div styleName="col-2"></div>
             <div styleName="col-3">
-              <button styleName="add-watcher" onClick={this.addWatcher}><i class="fa fa-eye"></i>    Add to watch list</button>
+              <button styleName="add-watcher" onClick={this.addWatcher}><i className="fa fa-eye"></i>    Add to watch list</button>
             </div>
           </div>
           <div styleName="watchers">{this.state.watchers} watchers</div>

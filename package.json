@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon server/index.js",
-    "build": "webpack -D --w"
+    "build": "webpack -w"
   },
   "repository": {
     "type": "git",
@@ -19,32 +19,39 @@
     "url": "https://github.com/anhjoseph/auction-component/issues"
   },
   "homepage": "https://github.com/anhjoseph/auction-component#readme",
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/client/src/setupTests.js",
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
+  },
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2105": "0.0.0",
-    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
-    "css-loader": "^0.28.11",
     "express": "^4.16.3",
     "moment": "^2.22.2",
-    "nodemon": "^1.17.5",
     "pg": "^7.4.3",
     "react": "^16.4.0",
     "react-css-modules": "^4.7.3",
     "react-dom": "^16.4.0",
-    "sequelize": "^4.37.10",
-    "sequelize-cli": "^4.0.0",
-    "style-loader": "^0.21.0"
+    "sequelize": "^4.37.10"
   },
   "devDependencies": {
-    "babel-jest": "^23.0.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
+    "jest-cli": "^23.1.0",
+    "jest-enzyme": "^6.0.1",
+    "nodemon": "^1.17.5",
     "react-test-renderer": "^16.4.0",
+    "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^2.1.4"
   }
