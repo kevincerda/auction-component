@@ -46,13 +46,11 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
     "jest-cli": "^23.1.0",
     "jest-enzyme": "^6.0.1",
     "nodemon": "^1.17.5",
-    "react-test-renderer": "^16.4.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^2.1.4"
