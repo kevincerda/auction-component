@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const getProductInfo = () => {
+const getProductInfo = (props) => {
   return axios.get('/api/auction/product/id', {
     params: {
-      id: 1
+      id: props.id
     }
   });
 };

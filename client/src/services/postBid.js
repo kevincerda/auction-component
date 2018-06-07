@@ -5,6 +5,6 @@ const postBid = (props) => {
     id: props.id,
     inputBid: props.inputBid
   });
-}
+};
 
 export default postBid;
