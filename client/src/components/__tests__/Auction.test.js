@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { shallow, mount } from 'enzyme';
 import Auction from '../Auction.jsx';
+jest.mock('../../services/request.js');
 
-describe('componentDidMount', () => {
+describe('AuctionComponent', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -22,54 +21,36 @@ describe('componentDidMount', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     auction.unmount();
   });
-});
 
-describe('fetchProductInfo', () => {
-  it('fetches product info correctly', done => {
-    
-    const data = {
-      data: { id: 1, name: 'sampleProduct', condition: 'new', minimum: 10.00, watchers: 3, createdAt: new Date() }
-    };
+  it('fetches product info on fetchProductInfo', done => {
+    const auction = shallow(<Auction />);
 
-    mock.onGet('/api/auction/product/id', { params: { id: '1' } }).reply(() => {
-      return new Promise((resolve, reject) => {
-        setTimeout(function() {
-          resolve(data);
-        }, 100);
-      })
-    });
-
-    const auctionWrapper = mount(<Auction />);
-    const instance = auctionWrapper.instance();
-
-    console.log(instance.fetchProductInfo)
-
-    return instance.fetchProductInfo().then((productInfo) => {
-      return expect(productInfo).toEqual(data);
+    setTimeout(() => {
+      auction.update();
+      const state = auction.instance().state;
+      expect(state.name).toEqual('sampleProduct');
+      expect(state.condition).toEqual('new');
+      expect(state.minimum).toEqual(10);
+      expect(state.watchers).toEqual(3);
       done();
-    }).catch(err => {
-      console.log('error fetching product info in test', err);
-    });
-
-    auctionWrapper.unmount();
+    })
   });
 
   it('calls fetchBids on fetchProductInfo', () => {
     const spy = jest.spyOn(Auction.prototype, 'fetchBids');
-    expect(spy).toHaveBeenCalledTimes(1);
-    spy.mockClear();
+    const auction = shallow(<Auction />);
+
+    setTimeout(() => {
+      auction.update();
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    })
   });
-});
 
-describe('fetchBids', () => {
-
-});
-
-describe('addWatcher', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
+  it('fetches bid info on fetchBids', () => {
+    
   });
-  
+
   it('simulates click events', () => {
     const spy = jest.spyOn(Auction.prototype, 'addWatcher');
     const auction = shallow(<Auction />);
