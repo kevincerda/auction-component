@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import CSSModules from 'react-css-modules';
 import styles from './Auction.css';
