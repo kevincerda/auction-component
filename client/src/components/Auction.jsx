@@ -47,7 +47,6 @@ class Auction extends React.Component {
 
   fetchBids() {
     getBids().then(({ data }) => {
-      console.log(data);
       let bidCount = `${data[0]} bid`;
       if (data[0] > 1) {
         bidCount = `${data[0]} bids`;

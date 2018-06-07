@@ -10,16 +10,16 @@ describe('AuctionComponent', () => {
   });
 
   it('calls componentDidMount on mount', () => {
-    const spy = jest.spyOn(Auction.prototype, 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(Auction.prototype, 'componentDidMount');
     const auction = mount(<Auction />);
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
     auction.unmount();
   });
 
   it('calls fetchProductInfo on componentDidMount', () => {
-    const spy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
+    const fetchProductInfoSpy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
     const auction = mount(<Auction />);
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
     auction.unmount();
   });
 
@@ -38,12 +38,12 @@ describe('AuctionComponent', () => {
   });
 
   it('calls fetchBids on fetchProductInfo', (done) => {
-    const spy = jest.spyOn(Auction.prototype, 'fetchBids');
+    const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
     const auction = shallow(<Auction />);
 
     setTimeout(() => {
       auction.update();
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
       done();
     });
   });
@@ -61,9 +61,24 @@ describe('AuctionComponent', () => {
   });
 
   it('simulates click events', () => {
-    const spy = jest.spyOn(Auction.prototype, 'addWatcher');
+    const addWatcherSpy = jest.spyOn(Auction.prototype, 'addWatcher');
     const auction = shallow(<Auction />);
     auction.find('.add-watcher').simulate('click');
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(addWatcherSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('simulates onChange events', () => {
+    const handleBidChangeSpy = jest.spyOn(Auction.prototype, 'handleBidChange');
+    const auction = shallow(<Auction />);
+    auction.find('.bid-input').simulate('change', { target: { value: 'Changed' } });
+    expect(handleBidChangeSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('simulates onSubmit events', () => {
+    const handleBidSubmitSpy = jest.spyOn(Auction.prototype, 'handleBidSubmit');
+    const auction = mount(<Auction />);
+    auction.find('.place-bid').simulate('submit');
+    expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
+    auction.unmount();
   });
 });
