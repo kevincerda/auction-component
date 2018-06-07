@@ -55,7 +55,7 @@ const BidController = {
       where: { id: req.body.id }
     }).then(foundProduct => {
       foundProduct.createBid({
-        amount: req.body.inputBid
+        amount: req.body.bidInput
       })
     }).then(() => {
       res.status(201).send();

@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme';
 import Auction from '../Auction.jsx';
 jest.mock('../../services/getProductInfo');
 jest.mock('../../services/getBids');
+jest.mock('../../services/postBid');
 
 describe('AuctionComponent', () => {
   afterEach(() => {
@@ -11,35 +12,35 @@ describe('AuctionComponent', () => {
 
   it('calls componentDidMount on mount', () => {
     const componentDidMountSpy = jest.spyOn(Auction.prototype, 'componentDidMount');
-    const auction = mount(<Auction />);
+    const auctionWrapper = mount(<Auction />);
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
-    auction.unmount();
+    auctionWrapper.unmount();
   });
 
   it('calls fetchProductInfo on componentDidMount', () => {
     const fetchProductInfoSpy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
-    const auction = mount(<Auction />);
+    const auctionWrapper = mount(<Auction />);
     expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
-    auction.unmount();
+    auctionWrapper.unmount();
   });
 
   it('calls fetchBids on fetchProductInfo', (done) => {
     const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
-    const auction = shallow(<Auction />);
+    const auctionWrapper = shallow(<Auction />);
 
     setTimeout(() => {
-      auction.update();
+      auctionWrapper.update();
       expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
       done();
     });
   });
 
   it('fetches product info', (done) => {
-    const auction = shallow(<Auction />);
+    const auctionWrapper = shallow(<Auction />);
 
     setTimeout(() => {
-      auction.update();
-      const state = auction.instance().state;
+      auctionWrapper.update();
+      const state = auctionWrapper.instance().state;
       expect(state.name).toEqual('sampleProduct');
       expect(state.condition).toEqual('new');
       expect(state.minimum).toEqual(10);
@@ -49,48 +50,65 @@ describe('AuctionComponent', () => {
   });
 
   it('fetches bids', (done) => {
-    const auction = shallow(<Auction />);
+    const auctionWrapper = shallow(<Auction />);
 
     setTimeout(() => {
-      auction.update();
-      const state = auction.instance().state;
-      expect(state.bids).toEqual('5 bids');
+      auctionWrapper.update();
+      const state = auctionWrapper.instance().state;
+      expect(state.bidCount).toEqual('5 bids');
       expect(state.currentBid).toEqual('100.00');
       done();
     });
   });
 
-  it('simulates click events', () => {
-    const addWatcherSpy = jest.spyOn(Auction.prototype, 'addWatcher');
-    const auction = shallow(<Auction />);
-    auction.find('.add-watcher').simulate('click');
-    expect(addWatcherSpy).toHaveBeenCalledTimes(1);
-  });
-
   it('simulates onChange events', () => {
     const handleBidChangeSpy = jest.spyOn(Auction.prototype, 'handleBidChange');
-    const auction = shallow(<Auction />);
-    auction.find('.bid-input').simulate('change', { target: { value: 'Changed' } });
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.find('.bid-input').simulate('change', { target: { value: 'Changed' } });
     expect(handleBidChangeSpy).toHaveBeenCalledTimes(1);
   });
 
   it('simulates onSubmit events', () => {
     const handleBidSubmitSpy = jest.spyOn(Auction.prototype, 'handleBidSubmit');
-    const auction = mount(<Auction />);
-    auction.find('.place-bid').simulate('submit');
+    const auctionWrapper = mount(<Auction />);
+    auctionWrapper.find('.place-bid').simulate('submit');
     expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
-    auction.unmount();
+    auctionWrapper.unmount();
   });
 
-  it('handles bid change', () => {
-
+  it('simulates click events', () => {
+    const addWatcherSpy = jest.spyOn(Auction.prototype, 'addWatcher');
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.find('.add-watcher').simulate('click');
+    expect(addWatcherSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('handles bid submit', () => {
+  it('handles bid change', (done) => {
+    const auctionWrapper = shallow(<Auction />);
 
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.find('.bid-input').simulate('change', { target: { value: '200.00' } });
+      const state = auctionWrapper.instance().state;
+      expect(state.bidInput).toEqual('200.00');
+      done();
+    });
   });
 
-  it('handles adding to watchlist', () => {
+  // it('handles bid submit', (done) => {
+  //   // const auctionWrapper = mount(<Auction />);
+  //   // auctionWrapper.find('.bid-input').simulate('change', { target: { value: 200.00 } });
+  //   // auctionWrapper.find('.place-bid').simulate('submit');
+
+  //   // setTimeout(() => {
+  //   //   auctionWrapper.update();
+  //   //   expect(auctionWrapper.instance().fetchBids).toHaveBeenCalledTimes(1);
+  //   //   done();
+  //   // });
+  //   // auctionWrapper.unmount();
+  // });
+
+  // it('handles adding to watchlist', () => {
     
-  });
+  // });
 });

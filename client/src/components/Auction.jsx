@@ -20,7 +20,7 @@ class Auction extends React.Component {
       hoursLeft: 0,
       secondsLeft: 0,
       endDate: '',
-      inputBid: '',
+      bidInput: '',
       bidCount: '',
       currentBid: ''
     }
@@ -76,24 +76,24 @@ class Auction extends React.Component {
 
   handleBidChange(e) {
     this.setState({
-      inputBid: e.target.value
-    }, () => console.log('this.state.inputBid =', this.state.inputBid))
+      bidInput: e.target.value
+    }, () => console.log('this.state.bidInput =', this.state.bidInput))
   }
 
   handleBidSubmit() {
     let regex = /^[1-9]\d*(?:\.\d{0,2})$/;
     if (!this.state.secondsLeft) {
       alert ('This auction has ended');
-    } else if (!regex.test(this.state.inputBid)) {
+    } else if (!regex.test(this.state.bidInput)) {
       alert ('Please enter a valid bid amount')
-    } else if (this.state.inputBid < this.state.minimum) {
+    } else if (this.state.bidInput < this.state.minimum) {
       alert ('Invalid bid, your bid is below the minimum');
-    } else if (this.state.inputBid < this.state.currentBid) {
+    } else if (this.state.bidInput < this.state.currentBid) {
       alert ('Invalid bid, your bid is lower than the current bid');
     } else {
       postBid({
         id: this.state.id,
-        inputBid: this.state.inputBid
+        bidInput: this.state.bidInput
       }).then(() => {
         this.fetchBids();
       }).catch(err => {
