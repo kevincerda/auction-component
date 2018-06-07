@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules';
 import styles from './Auction.css';
 import getProductInfo from '../services/getProductInfo';
 import getBids from '../services/getBids';
+import postBid from '../services/postBid';
 
 class Auction extends React.Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class Auction extends React.Component {
     } else if (this.state.inputBid < this.state.currentBid) {
       alert ('Invalid bid, your bid is lower than the current bid');
     } else {
-      axios.post('/api/auction/bid', {
+      postBid({
         id: this.state.id,
         inputBid: this.state.inputBid
       }).then(() => {
