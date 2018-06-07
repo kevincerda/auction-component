@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const Promise = require('bluebird');
 const { Product, Bid } = require('../../database/models');
 
 const AuctionController = {
@@ -56,10 +55,10 @@ const BidController = {
       where: { id: req.body.id }
     }).then(foundProduct => {
       foundProduct.createBid({
-        amount: req.body.bidAmount
+        amount: req.body.inputBid
       })
-    }).then(data => {
-      res.status(201).send(data);
+    }).then(() => {
+      res.status(201).send();
     }).catch(err => {
       res.status(400).send(err);
     })

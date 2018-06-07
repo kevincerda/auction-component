@@ -23,7 +23,18 @@ describe('AuctionComponent', () => {
     auction.unmount();
   });
 
-  it('fetches product info on fetchProductInfo', (done) => {
+  it('calls fetchBids on fetchProductInfo', (done) => {
+    const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
+    const auction = shallow(<Auction />);
+
+    setTimeout(() => {
+      auction.update();
+      expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it('fetches product info', (done) => {
     const auction = shallow(<Auction />);
 
     setTimeout(() => {
@@ -37,18 +48,7 @@ describe('AuctionComponent', () => {
     });
   });
 
-  it('calls fetchBids on fetchProductInfo', (done) => {
-    const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
-    const auction = shallow(<Auction />);
-
-    setTimeout(() => {
-      auction.update();
-      expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
-      done();
-    });
-  });
-
-  it('fetches bid info on fetchBids', (done) => {
+  it('fetches bids', (done) => {
     const auction = shallow(<Auction />);
 
     setTimeout(() => {
@@ -80,5 +80,17 @@ describe('AuctionComponent', () => {
     auction.find('.place-bid').simulate('submit');
     expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
     auction.unmount();
+  });
+
+  it('handles bid change', () => {
+
+  });
+
+  it('handles bid submit', () => {
+
+  });
+
+  it('handles adding to watchlist', () => {
+    
   });
 });
