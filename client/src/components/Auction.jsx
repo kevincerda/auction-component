@@ -26,7 +26,6 @@ class Auction extends React.Component {
     .then(({ data }) => {
       let endDate = moment(data.createdAt).add(7, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
-
       this.setState({
         id: data.id,
         name: data.name,
@@ -38,7 +37,6 @@ class Auction extends React.Component {
         secondsLeft: timeLeft.seconds(),
         endDate: endDate.format('dddd, h:mmA')
       })
-
     }).then(() => {
       this.fetchBids();
     }).catch(err => {
