@@ -6,6 +6,7 @@ import styles from './Auction.css';
 import getProductInfo from '../services/getProductInfo';
 import getBids from '../services/getBids';
 import postBid from '../services/postBid';
+import postWatcher from '../services/postWatcher';
 
 class Auction extends React.Component {
   constructor(props) {
@@ -103,10 +104,8 @@ class Auction extends React.Component {
   }
 
   addWatcher() {
-    axios.post('/api/auction/product/id', {
-      params: {
-        id: this.state.id
-      }
+    postWatcher({
+      id: this.state.id
     }).then(data => {
       this.fetchProductInfo();
     }).catch(err => {
