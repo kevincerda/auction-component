@@ -3,7 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import CSSModules from 'react-css-modules';
 import styles from './Auction.css';
-import getProduct from '../services/request';
+import getProductInfo from '../services/getProductInfo';
+import getBids from '../services/getBids';
 
 class Auction extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Auction extends React.Component {
   }
 
   fetchProductInfo() {
-    getProduct().then(({ data }) => {
+    getProductInfo().then(({ data }) => {
       let endDate = moment(data.createdAt).add(7, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
       this.setState({
@@ -45,11 +46,11 @@ class Auction extends React.Component {
   }
 
   fetchBids() {
-    axios.get('/api/auction/bid')
-    .then(({ data }) => {
-      let bidCount = data[0] + ' bid';
+    getBids().then(({ data }) => {
+      console.log(data);
+      let bidCount = `${data[0]} bid`;
       if (data[0] > 1) {
-        bidCount = data[0] + ' bids';
+        bidCount = `${data[0]} bids`;
       }
       this.setState({
         bids: bidCount,
@@ -81,9 +82,9 @@ class Auction extends React.Component {
         id: this.state.id,
         bidAmount: this.state.bidAmount
       }).then(data => {
-        let bidCount = data.bids + ' bid';
+        let bidCount = `${data[0]} bid`;
         if (data[0] > 1) {
-          bidCount = data.bids + ' bids';
+          bidCount = `${data[0]} bids`;
         }
         this.setState({
           bids: bidCount,

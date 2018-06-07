@@ -1,4 +1,4 @@
-export const data = {
+const fakeData = {
   data: { 
     id: 1,
     name: 'sampleProduct',
@@ -11,6 +11,6 @@ export const data = {
 
 export default async () => {
   return await new Promise(resolve => {
-    resolve(data);
+    resolve(fakeData);
   });
 };

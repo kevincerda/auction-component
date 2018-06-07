@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Auction from '../Auction.jsx';
-jest.mock('../../services/request.js');
+jest.mock('../../services/getProductInfo');
+jest.mock('../../services/getBids');
 
 describe('AuctionComponent', () => {
   afterEach(() => {
@@ -22,7 +23,7 @@ describe('AuctionComponent', () => {
     auction.unmount();
   });
 
-  it('fetches product info on fetchProductInfo', done => {
+  it('fetches product info on fetchProductInfo', (done) => {
     const auction = shallow(<Auction />);
 
     setTimeout(() => {
@@ -33,10 +34,10 @@ describe('AuctionComponent', () => {
       expect(state.minimum).toEqual(10);
       expect(state.watchers).toEqual(3);
       done();
-    })
+    });
   });
 
-  it('calls fetchBids on fetchProductInfo', () => {
+  it('calls fetchBids on fetchProductInfo', (done) => {
     const spy = jest.spyOn(Auction.prototype, 'fetchBids');
     const auction = shallow(<Auction />);
 
@@ -44,11 +45,19 @@ describe('AuctionComponent', () => {
       auction.update();
       expect(spy).toHaveBeenCalledTimes(1);
       done();
-    })
+    });
   });
 
-  it('fetches bid info on fetchBids', () => {
-    
+  it('fetches bid info on fetchBids', (done) => {
+    const auction = shallow(<Auction />);
+
+    setTimeout(() => {
+      auction.update();
+      const state = auction.instance().state;
+      expect(state.bids).toEqual('5 bids');
+      expect(state.currentBid).toEqual('100.00');
+      done();
+    });
   });
 
   it('simulates click events', () => {

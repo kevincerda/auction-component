@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const getProduct = () => {
+const getProductInfo = () => {
   return axios.get('/api/auction/product/id', {
     params: {
       id: 1
     }
   });
-}
+};
 
-export default getProduct;
+export default getProductInfo;
