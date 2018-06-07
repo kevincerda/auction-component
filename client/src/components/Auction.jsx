@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import CSSModules from 'react-css-modules';
 import styles from './Auction.css';
+import getProduct from '../services/request';
 
 class Auction extends React.Component {
   constructor(props) {
@@ -22,8 +23,7 @@ class Auction extends React.Component {
   }
 
   fetchProductInfo() {
-    axios.get('/api/auction/product/id/' + this.state.id)
-    .then(({ data }) => {
+    getProduct().then(({ data }) => {
       let endDate = moment(data.createdAt).add(7, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
       this.setState({
@@ -63,7 +63,7 @@ class Auction extends React.Component {
   handleBidChange(e) {
     this.setState({
       bidAmount: e.target.value
-    }, () => console.log('this.state.bidAmount =', this.state.bidAmount))
+    })
   }
 
   handleBidSubmit() {
@@ -96,11 +96,14 @@ class Auction extends React.Component {
   }
 
   addWatcher() {
-    axios.post('/api/auction/product/id/' + this.state.id)
-    .then(data => {
+    axios.post('/api/auction/product/id', {
+      params: {
+        id: this.state.id
+      }
+    }).then(data => {
       this.componentDidMount();
     }).catch(err => {
-      console.log('we\'re sorry, there was an error when trying to add this item to your watchlist');
+      console.log('There was an error trying to add this item to your watchlist');
     })
   }
 
