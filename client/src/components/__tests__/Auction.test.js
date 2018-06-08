@@ -4,6 +4,7 @@ import Auction from '../Auction.jsx';
 jest.mock('../../services/getProductInfo');
 jest.mock('../../services/getBids');
 jest.mock('../../services/postBid');
+jest.mock('../../services/postWatcher');
 
 describe('AuctionComponent', () => {
   afterEach(() => {
