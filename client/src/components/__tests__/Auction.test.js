@@ -108,7 +108,15 @@ describe('AuctionComponent', () => {
     });
   });
 
-  it('handles adding to watchlist', () => {
-    
+  it('handles adding to watchlist', (done) => {
+    const fetchProductInfoSpy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
+    const auctionWrapper = shallow(<Auction />);
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().addWatcher();
+      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
+      done();
+    });
   });
 });

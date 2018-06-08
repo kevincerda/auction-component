@@ -105,7 +105,7 @@ class Auction extends React.Component {
   addWatcher() {
     postWatcher({
       id: this.state.id
-    }).then(data => {
+    }).then(() => {
       this.fetchProductInfo();
     }).catch(err => {
       console.log('There was an error trying to add this item to your watchlist');

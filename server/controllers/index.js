@@ -30,7 +30,7 @@ const AuctionController = {
     }, {
       where: query
     }).then(() => {
-      res.status(201).send('successfully updated watchers');
+      res.status(201).send();
     }).catch(err => {
       res.status(400).send(err);
     })
