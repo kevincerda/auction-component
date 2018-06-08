@@ -95,20 +95,20 @@ describe('AuctionComponent', () => {
     });
   });
 
-  // it('handles bid submit', (done) => {
-  //   // const auctionWrapper = mount(<Auction />);
-  //   // auctionWrapper.find('.bid-input').simulate('change', { target: { value: 200.00 } });
-  //   // auctionWrapper.find('.place-bid').simulate('submit');
+  it('handles bid submit', (done) => {
+    const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.instance().setState({ secondsLeft: 10000, bidInput: '200.00' });
 
-  //   // setTimeout(() => {
-  //   //   auctionWrapper.update();
-  //   //   expect(auctionWrapper.instance().fetchBids).toHaveBeenCalledTimes(1);
-  //   //   done();
-  //   // });
-  //   // auctionWrapper.unmount();
-  // });
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().handleBidSubmit();
+      expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
 
-  // it('handles adding to watchlist', () => {
+  it('handles adding to watchlist', () => {
     
-  // });
+  });
 });
