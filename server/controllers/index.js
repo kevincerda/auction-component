@@ -3,14 +3,8 @@ const { Product, Bid } = require('../../database/models');
 
 const AuctionController = {
   'GET': (req, res) => {
-    let query = {};
-    if (req.params.id) {
-      query.id = req.params.id;
-    } else if (req.params.name) {
-      query.name = req.params.name
-    }
     Product.find({
-      where: query
+      where: req.query
     }).then(data => {
       res.status(200).send(data);
     }).catch(err => {
@@ -19,16 +13,10 @@ const AuctionController = {
   },
 
   'POST': (req, res) => {
-    let query = {};
-    if (req.params.id) {
-      query.id = req.params.id;
-    } else if (req.params.name) {
-      query.name = req.params.name
-    }
     Product.update({
       watchers: Sequelize.literal('watchers + 1')
     }, {
-      where: query
+      where: req.query
     }).then(() => {
       res.status(201).send();
     }).catch(err => {
@@ -39,10 +27,9 @@ const AuctionController = {
 
 const BidController = {
   'GET': (req, res) => {
-    let data = {};
     Promise.all([
-      Bid.count({ where: { productId: 1 }}),
-      Bid.max('amount', { where: { productId: 1 }})
+      Bid.count({ where: req.query}),
+      Bid.max('amount', { where: req.query})
     ]).then(data => {
       res.status(200).send(data);
     }).catch(err => {
@@ -56,7 +43,7 @@ const BidController = {
     }).then(foundProduct => {
       foundProduct.createBid({
         amount: req.body.bidInput
-      })
+      });
     }).then(() => {
       res.status(201).send();
     }).catch(err => {

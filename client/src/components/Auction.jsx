@@ -60,7 +60,9 @@ class Auction extends React.Component {
   }
 
   fetchBids() {
-    getBids().then(({ data }) => {
+    getBids({
+      productId: this.state.id
+    }).then(({ data }) => {
       let bidCount = `${data[0]} bid`;
       if (data[0] > 1) {
         bidCount = `${data[0]} bids`;
@@ -71,6 +73,16 @@ class Auction extends React.Component {
       })
     }).catch(err => {
       console.log('error fetching product bidCount', err);
+    })
+  }
+
+  addWatcher() {
+    postWatcher({
+      id: this.state.id
+    }).then(() => {
+      this.fetchProductInfo();
+    }).catch(err => {
+      console.log('There was an error trying to add this item to your watchlist');
     })
   }
 
@@ -100,16 +112,6 @@ class Auction extends React.Component {
         console.log('error submitting bid', err);
       })
     }
-  }
-
-  addWatcher() {
-    postWatcher({
-      id: this.state.id
-    }).then(() => {
-      this.fetchProductInfo();
-    }).catch(err => {
-      console.log('There was an error trying to add this item to your watchlist');
-    })
   }
 
   render() {

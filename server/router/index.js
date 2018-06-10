@@ -1,11 +1,7 @@
 const router = require('express').Router();
 const { AuctionController, BidController } = require('../controllers');
 
-router.route('/auction/product/id')
-  .get(AuctionController.GET)
-  .post(AuctionController.POST)
-
-router.route('/auction/product/name')
+router.route('/auction/product')
   .get(AuctionController.GET)
   .post(AuctionController.POST)
 

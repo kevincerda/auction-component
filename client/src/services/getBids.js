@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const getBids = () => {
-  return axios.get('/api/auction/bid');
+const getBids = (props) => {
+  return axios.get('/api/auction/bid', {
+    params: props
+  });
 }
 
 export default getBids;
