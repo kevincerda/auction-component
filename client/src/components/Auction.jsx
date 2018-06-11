@@ -14,11 +14,11 @@ class Auction extends React.Component {
       id: 1,
       name: '',
       condition: '',
-      minimum: 0,
-      watchers: 0,
-      daysLeft: 0,
-      hoursLeft: 0,
-      secondsLeft: 0,
+      minimum: '',
+      watchers: '',
+      daysLeft: '',
+      hoursLeft: '',
+      secondsLeft: '',
       endDate: '',
       bidInput: '',
       bidCount: '',
@@ -98,9 +98,9 @@ class Auction extends React.Component {
       alert ('This auction has ended');
     } else if (!regex.test(this.state.bidInput)) {
       alert ('Please enter a valid bid amount')
-    } else if (this.state.bidInput < this.state.minimum) {
+    } else if (Number(this.state.bidInput) < Number(this.state.minimum)) {
       alert ('Invalid bid, your bid is below the minimum');
-    } else if (this.state.bidInput < this.state.currentBid) {
+    } else if (Number(this.state.bidInput) < Number(this.state.currentBid)) {
       alert ('Invalid bid, your bid is lower than the current bid');
     } else {
       postBid({
