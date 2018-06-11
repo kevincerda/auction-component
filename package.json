@@ -4,7 +4,7 @@
   "description": "Service allowing users to watch a product or bid in the auction",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "nodemon server/index.js",
     "build": "webpack -w"
   },
