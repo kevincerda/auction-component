@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/anhjoseph/auction-component#readme",
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/client/src/setupTests.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
     "moduleNameMapper": {
       "\\.(css|less)$": "identity-obj-proxy"
     }

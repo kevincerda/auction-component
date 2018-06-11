@@ -1,28 +1,38 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import Auction from '../Auction.jsx';
-jest.mock('../../services/getProductInfo');
-jest.mock('../../services/getBids');
-jest.mock('../../services/postBid');
-jest.mock('../../services/postWatcher');
+import Auction from '../client/src/components/Auction.jsx';
+jest.mock('../client/src/services/getProductInfo');
+jest.mock('../client/src/services/getBids');
+jest.mock('../client/src/services/postBid');
+jest.mock('../client/src/services/postWatcher');
 
 describe('AuctionComponent', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('calls componentDidMount on mount', () => {
+  it('calls componentDidMount on mount', (done) => {
     const componentDidMountSpy = jest.spyOn(Auction.prototype, 'componentDidMount');
     const auctionWrapper = mount(<Auction />);
-    expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
-    auctionWrapper.unmount();
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
+      done();
+    });
   });
 
-  it('calls fetchProductInfo on componentDidMount', () => {
+  it('calls fetchProductInfo on componentDidMount', (done) => {
     const fetchProductInfoSpy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
     const auctionWrapper = mount(<Auction />);
-    expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
-    auctionWrapper.unmount();
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
+      done();
+    });
   });
 
   it('calls fetchBids on fetchProductInfo', (done) => {
@@ -32,6 +42,7 @@ describe('AuctionComponent', () => {
     setTimeout(() => {
       auctionWrapper.update();
       expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
       done();
     });
   });
@@ -46,6 +57,7 @@ describe('AuctionComponent', () => {
       expect(state.condition).toEqual('new');
       expect(state.minimum).toEqual(10);
       expect(state.watchers).toEqual(3);
+      auctionWrapper.unmount();
       done();
     });
   });
@@ -58,30 +70,48 @@ describe('AuctionComponent', () => {
       const state = auctionWrapper.instance().state;
       expect(state.bidCount).toEqual('5 bids');
       expect(state.currentBid).toEqual('100.00');
+      auctionWrapper.unmount();
       done();
     });
   });
 
-  it('simulates onChange events', () => {
+  it('simulates onChange events', (done) => {
     const handleBidChangeSpy = jest.spyOn(Auction.prototype, 'handleBidChange');
     const auctionWrapper = shallow(<Auction />);
-    auctionWrapper.find('.bid-input').simulate('change', { target: { value: 'Changed' } });
-    expect(handleBidChangeSpy).toHaveBeenCalledTimes(1);
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.find('.bid-input').simulate('change', { target: { value: '200.00' } });
+      expect(handleBidChangeSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
+      done();
+    });
   });
 
-  it('simulates onSubmit events', () => {
+  it('simulates onSubmit events', (done) => {
     const handleBidSubmitSpy = jest.spyOn(Auction.prototype, 'handleBidSubmit');
     const auctionWrapper = mount(<Auction />);
-    auctionWrapper.find('.place-bid').simulate('submit');
-    expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
-    auctionWrapper.unmount();
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.find('.place-bid').simulate('submit');
+      expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
+      done();
+    });
   });
 
-  it('simulates click events', () => {
+  it('simulates click events', (done) => {
     const addWatcherSpy = jest.spyOn(Auction.prototype, 'addWatcher');
     const auctionWrapper = shallow(<Auction />);
     auctionWrapper.find('.add-watcher').simulate('click');
-    expect(addWatcherSpy).toHaveBeenCalledTimes(1);
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      expect(addWatcherSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
+      done();
+    });
   });
 
   it('handles bid change', (done) => {
@@ -92,19 +122,21 @@ describe('AuctionComponent', () => {
       auctionWrapper.find('.bid-input').simulate('change', { target: { value: '200.00' } });
       const state = auctionWrapper.instance().state;
       expect(state.bidInput).toEqual('200.00');
+      auctionWrapper.unmount();
       done();
     });
   });
 
   it('handles bid submit', (done) => {
     const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
-    const auctionWrapper = shallow(<Auction />);
-    auctionWrapper.instance().setState({ secondsLeft: 10000, bidInput: '200.00' });
+    const auctionWrapper = shallow(<Auction />);    
 
     setTimeout(() => {
       auctionWrapper.update();
-      auctionWrapper.instance().handleBidSubmit();
+      auctionWrapper.find('.bid-input').simulate('change', { target: { value: '200.00' } });
+      auctionWrapper.find('.place-bid').simulate('click');
       expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
+      auctionWrapper.unmount();
       done();
     });
   });
@@ -112,11 +144,12 @@ describe('AuctionComponent', () => {
   it('handles adding to watchlist', (done) => {
     const fetchProductInfoSpy = jest.spyOn(Auction.prototype, 'fetchProductInfo');
     const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.find('.add-watcher').simulate('click');
 
     setTimeout(() => {
       auctionWrapper.update();
-      auctionWrapper.instance().addWatcher();
-      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
+      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(2);
+      auctionWrapper.unmount();
       done();
     });
   });

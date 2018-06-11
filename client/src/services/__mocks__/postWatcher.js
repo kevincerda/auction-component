@@ -1,5 +1,5 @@
-export default async (props) => {
+export default async () => {
   return await new Promise(resolve => {
-    resolve(props);
+    resolve();
   });
 };

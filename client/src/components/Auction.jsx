@@ -94,7 +94,7 @@ class Auction extends React.Component {
 
   handleBidSubmit() {
     let regex = /^[1-9]\d*(?:\.\d{0,2})$/;
-    if (!this.state.secondsLeft) {
+    if (!Number(this.state.secondsLeft)) {
       alert ('This auction has ended');
     } else if (!regex.test(this.state.bidInput)) {
       alert ('Please enter a valid bid amount')
