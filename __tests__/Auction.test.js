@@ -4,7 +4,6 @@ import { shallow, mount } from 'enzyme';
 jest.mock('../client/src/services/getProductInfo');
 jest.mock('../client/src/services/getBids');
 jest.mock('../client/src/services/postBid');
-jest.mock('../client/src/services/postWatcher');
 
 describe('AuctionComponent', () => {
   afterEach(() => {
@@ -134,7 +133,7 @@ describe('AuctionComponent', () => {
 
     setTimeout(() => {
       auctionWrapper.update();
-      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(2);
+      expect(fetchProductInfoSpy).toHaveBeenCalledTimes(1);
       auctionWrapper.unmount();
       done();
     });
