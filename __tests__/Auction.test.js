@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 import Auction from '../client/src/components/Auction.jsx';
 jest.mock('../client/src/services/getProductInfo');
 jest.mock('../client/src/services/getBids');
@@ -88,19 +87,6 @@ describe('AuctionComponent', () => {
     });
   });
 
-  it('simulates onSubmit events', (done) => {
-    const handleBidSubmitSpy = jest.spyOn(Auction.prototype, 'handleBidSubmit');
-    const auctionWrapper = mount(<Auction />);
-
-    setTimeout(() => {
-      auctionWrapper.update();
-      auctionWrapper.find('.place-bid').simulate('submit');
-      expect(handleBidSubmitSpy).toHaveBeenCalledTimes(1);
-      auctionWrapper.unmount();
-      done();
-    });
-  });
-
   it('simulates click events', (done) => {
     const addWatcherSpy = jest.spyOn(Auction.prototype, 'addWatcher');
     const auctionWrapper = shallow(<Auction />);
@@ -129,12 +115,11 @@ describe('AuctionComponent', () => {
 
   it('handles bid submit', (done) => {
     const fetchBidsSpy = jest.spyOn(Auction.prototype, 'fetchBids');
-    const auctionWrapper = shallow(<Auction />);    
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.find('.place-bid').simulate('click');
 
     setTimeout(() => {
       auctionWrapper.update();
-      auctionWrapper.find('.bid-input').simulate('change', { target: { value: '200.00' } });
-      auctionWrapper.find('.place-bid').simulate('click');
       expect(fetchBidsSpy).toHaveBeenCalledTimes(1);
       auctionWrapper.unmount();
       done();
@@ -149,6 +134,62 @@ describe('AuctionComponent', () => {
     setTimeout(() => {
       auctionWrapper.update();
       expect(fetchProductInfoSpy).toHaveBeenCalledTimes(2);
+      auctionWrapper.unmount();
+      done();
+    });
+  });
+
+  it('throws error when user posts bid after bid close', (done) => {
+    window.alert = jest.fn();
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.setState({ secondsLeft: 0 });
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().handleBidSubmit();
+      expect(window.alert).toHaveBeenCalled();
+      auctionWrapper.unmount();
+      done();
+    });
+  });
+
+  it('throws error when user posts invalid bid', (done) => {
+    window.alert = jest.fn();
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.setState({ bidInput: 'nonsense' });
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().handleBidSubmit();
+      expect(window.alert).toHaveBeenCalled();
+      auctionWrapper.unmount();
+      done();
+    });
+  });
+
+  it('throws error when user posts bid below the minimum', (done) => {
+    window.alert = jest.fn();
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.setState({ bidInput: '1' });
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().handleBidSubmit();
+      expect(window.alert).toHaveBeenCalled();
+      auctionWrapper.unmount();
+      done();
+    });
+  });
+
+  it('throws error when user posts bid below the current bid', (done) => {
+    window.alert = jest.fn();
+    const auctionWrapper = shallow(<Auction />);
+    auctionWrapper.setState({ bidInput: '50' });
+
+    setTimeout(() => {
+      auctionWrapper.update();
+      auctionWrapper.instance().handleBidSubmit();
+      expect(window.alert).toHaveBeenCalled();
       auctionWrapper.unmount();
       done();
     });

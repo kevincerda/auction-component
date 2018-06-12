@@ -25,6 +25,6 @@ describe('AuctionController', () => {
       expect(data.condition).toEqual('testCondition');
       expect(data.minimum).toEqual(100);
       expect(data.watchers).toEqual(30);
-    });
+    })
   });
 });

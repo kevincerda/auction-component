@@ -4,7 +4,8 @@
   "description": "Service allowing users to watch a product or bid in the auction",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --watch",
+    "test:coverage": "jest --coverage",
     "start": "nodemon server/index.js",
     "build": "webpack -w"
   },
@@ -51,7 +52,6 @@
     "jest-cli": "^23.1.0",
     "jest-enzyme": "^6.0.1",
     "nodemon": "^1.17.5",
-    "proxyquire": "^2.0.1",
     "sequelize-mock": "^0.10.2",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
