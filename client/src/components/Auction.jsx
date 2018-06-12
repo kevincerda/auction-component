@@ -97,7 +97,7 @@ class Auction extends React.Component {
     if (!Number(this.state.secondsLeft)) {
       alert ('This auction has ended');
     } else if (!regex.test(this.state.bidInput)) {
-      alert ('Please enter a valid bid amount')
+      alert ('Please enter a valid bid amount');
     } else if (Number(this.state.bidInput) < Number(this.state.minimum)) {
       alert ('Invalid bid, your bid is below the minimum');
     } else if (Number(this.state.bidInput) < Number(this.state.currentBid)) {

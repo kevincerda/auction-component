@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getProductInfo = (props) => {
-  return axios.get('/api/auction/product', {
+  return axios.get('http://localhost:8000/api/auction/product', {
     params: props
   });
 };
