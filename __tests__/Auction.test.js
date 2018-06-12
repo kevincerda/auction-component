@@ -1,5 +1,6 @@
 import React from 'react';
 import Auction from '../client/src/components/Auction.jsx';
+import { shallow, mount } from 'enzyme';
 jest.mock('../client/src/services/getProductInfo');
 jest.mock('../client/src/services/getBids');
 jest.mock('../client/src/services/postBid');
