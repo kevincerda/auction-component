@@ -11,7 +11,7 @@ module.export = (grunt) => {
         bucket: "auction-component"
       },
       build: {
-        cwd: "build/",
+        cwd: "../client/public/bundle.js",
         src: "**"
       }
     }
