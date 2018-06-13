@@ -12,7 +12,7 @@ module.exports = (grunt) => {
         region: 'us-west-1'
       },
       build: {
-        cwd: 'client/public',
+        cwd: 'client/public/',
         src: 'bundle.js'
       }
     }
