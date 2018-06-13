@@ -48,6 +48,7 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "grunt": "^1.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
     "jest-cli": "^23.1.0",
