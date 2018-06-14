@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('auction', '', '', {
+const db = new Sequelize('auction', 'root', '', {
   host: 'db',
-  dialect: 'postgresql'
+  dialect: 'postgres'
 });
 
 db.authenticate()

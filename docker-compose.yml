@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_DB: auction
+  web:
+    build: .
+    command: bash -c "npm start && npm run build"
+    image: auction
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://root@db/auction

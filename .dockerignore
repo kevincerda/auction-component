@@ -1,7 +1,7 @@
-node_modules/
-coverage/
+node_modules
+coverage
 client/public/bundle.js
-.babelrc
+Gruntfile.js
 aws-credentials.json
 .gitignore
-Gruntfile.js
+.babelrc
