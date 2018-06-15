@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getBids = (props) => {
-  return axios.get('http://localhost:9000/api/auction/bid', {
+  return axios.get('/api/auction/bid', {
     params: props
   });
 }

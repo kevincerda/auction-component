@@ -39,7 +39,6 @@
     "sequelize": "^4.37.10"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.15.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
