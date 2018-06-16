@@ -3,7 +3,6 @@ import CSSModules from 'react-css-modules';
 import styles from './Title.css';
 import getProductInfo from '../services/getProductInfo';
 
-
 class Title extends React.Component {
   constructor(props) {
     super(props);
