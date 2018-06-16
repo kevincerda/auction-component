@@ -8,13 +8,10 @@ services:
       POSTGRES_USER: root
       POSTGRES_DB: auction
   web:
-    build: .
-    command: bash -c "npm start && npm run build"
-    image: auction
+    command: "npm start"
+    image: anjoseph/auction:first
     ports:
       - "9000:9000"
-    volumes:
-      - .:/usr/src/app
     depends_on:
       - db
     environment:
