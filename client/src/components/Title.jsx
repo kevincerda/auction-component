@@ -33,6 +33,7 @@ class Title extends React.Component {
     return (
       <div>
         <div styleName="item-text">{this.state.name}</div>
+        <hr />
       </div>
     )
   }

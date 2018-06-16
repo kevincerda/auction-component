@@ -117,7 +117,6 @@ class Auction extends React.Component {
   render() {
     return (
       <div styleName="auction-container">
-        <hr />
         <div styleName="info-bids-container">
           <div styleName="info-container">
             <div>

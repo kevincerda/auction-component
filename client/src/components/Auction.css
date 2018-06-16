@@ -2,12 +2,6 @@ div {
   font-family: "Helvetica neue", Helvetica, Verdana, Sans-serif;
   font-size: 13px;
 }
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid rgb(226, 226, 226)
-}
 a, a:visited {
   text-decoration: none;
 }
