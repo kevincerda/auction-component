@@ -5,5 +5,4 @@ const getBids = (props) => {
     params: props
   });
 }
-
 export default getBids;
