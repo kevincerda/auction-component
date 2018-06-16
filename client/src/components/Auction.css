@@ -6,7 +6,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid rgba(230, 230, 230, 0.975);
+  border-top: 1px solid rgb(226, 226, 226)
 }
 a, a:visited {
   text-decoration: none;
@@ -18,16 +18,15 @@ a:hover {
 .auction-container {
   width: auto;
 }
-.item-name {
-  font-weight: bold;
-  font-size: 19px;
+.info-bids-container {
+  width: auto;
 }
 .info-container {
   margin-bottom: 15px;
 }
 .bid-container {
   height: auto;
-  background-color: rgba(230, 230, 230, 0.975);
+  background-color: rgb(226, 226, 226);
   padding-top: 10px;
   padding-left: 2px;
   padding-right: 2px;
