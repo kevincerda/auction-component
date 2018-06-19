@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getBids = (props) => {
-  return axios.get('http://13.57.185.191:9000/api/auction/bid', {
+  return axios.get('http://18.144.32.186:9000/api/auction/bid', {
     params: props
   });
 }
