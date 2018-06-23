@@ -4,3 +4,4 @@ client/public/bundle.js
 .babelrc
 aws-credentials.json
 .dockerignore
+data
