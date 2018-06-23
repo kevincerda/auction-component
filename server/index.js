@@ -15,9 +15,5 @@ app.use(express.static(path.join(__dirname, '../client/public/')));
 app.use('/api', router);
 
 app.listen(port, (err) => {
-  if (err) {
-    console.log('error connecting to port', port);
-  } else {
-    console.log('error syncing to db', err);
-  }
+  err ? console.log('Error connecting to server', err) : console.log('Successfully connected to server on port', port);
 });
