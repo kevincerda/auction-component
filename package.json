@@ -33,11 +33,12 @@
     "express": "^4.16.3",
     "faker": "^4.1.0",
     "moment": "^2.22.2",
+    "mysql": "^2.15.0",
     "pg": "^7.4.3",
     "react": "^16.4.0",
     "react-css-modules": "^4.7.3",
     "react-dom": "^16.4.0",
-    "sequelize": "^4.37.10"
+    "sequelize": "^4.38.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
