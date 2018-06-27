@@ -5,3 +5,4 @@ client/public/bundle.js
 aws-credentials.json
 .dockerignore
 data
+product.csv

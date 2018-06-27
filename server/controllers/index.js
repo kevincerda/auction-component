@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, Bid } = require('../../database/models');
+const { Product, Bid } = require('../../database/postgres/models');
 
 const AuctionController = {
   'GET': (req, res) => {

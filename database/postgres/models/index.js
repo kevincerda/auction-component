@@ -1,6 +1,6 @@
 // const Sequelize = require('sequelize');
 // const { db } = require('../config');
-// const { productSeeds, bidSeeds } = require('../seeds/seed');
+// const { productSeeds, bidSeeds } = require('../../seeds/seed.js');
 
 // const Product = db.define('product', {
 //   name: {
