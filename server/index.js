@@ -6,7 +6,7 @@ const { router } = require('./router');
 require('../database/postgres/config');
 require('../database/mongodb/config');
 
-const port = 9000;
+const port = 2106;
 const app = express();
 
 app.use(cors());
