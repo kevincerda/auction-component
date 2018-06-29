@@ -6,3 +6,4 @@ aws-credentials.json
 .dockerignore
 data
 product.csv
+bids.csv
