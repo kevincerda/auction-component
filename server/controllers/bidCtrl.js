@@ -1,9 +1,9 @@
-const db = require('../../database/mongodb/config');
+const { bids } = require('../../database/mongodb/config');
 
 module.exports = {
   bidCtrl: {
     POST: (req, res) => {
-      db.bids.insert({
+      bids().insert({
         product_id: req.body.product_id,
         customer: req.body.name,
         bid: req.body.bid
@@ -13,12 +13,12 @@ module.exports = {
         res.status(201).send(data);
       })
       .catch(err => {
-        console.log('Error inserting document into databse', err);
+        console.error('Error inserting document into databse', err);
         res.stats(400).send(err);
       })
     },
     PUT: (req, res) => {
-      db.bids.update({
+      bids().update({
         _id: req.body.id
       }, {
         $set: {
@@ -26,25 +26,41 @@ module.exports = {
         }
       })
       .then(data => {
-        console.log('Succesfully updated document');
+        console.log('Succesfully updated document', data);
         res.status(201).send(data);
       })
       .catch(err => {
-        console.log('Error updating document', err);
+        console.error('Error updating document', err);
         res.status(400).send(err);
       })
     },
     DELETE: (req, res) => {
-      db.bids.remove({
+      bids().remove({
         _id: req.body.id
       }, 1)
       .then(data => {
-        console.log('Successfully deleted document');
+        console.log(`Successfully deleted document`);
         res.status(200).send(data);
       })
       .catch(err => {
-        console.log('Error deleting document', err);
+        console.error('Error deleting document', err);
         res.status(400).send(data);
+      })
+    }
+  },
+  bidById: {
+    GET: (req, res) => {
+      const id = JSON.parse(req.params.id);
+      bids().findOne({
+        _id: id
+      })
+      .then(data => {
+        console.log(`Succesfully fetched bid document with id: ${id}`, data);
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.log(`Error fetching bid document with id: ${id}`, err);
+        res.send(err);
       })
     }
   }

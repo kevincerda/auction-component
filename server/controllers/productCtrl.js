@@ -1,9 +1,9 @@
-const db = require('../../database/mongodb/config');
+const { products } = require('../../database/mongodb/config');
 
 module.exports = {
   productCtrl: {
     POST: (req, res) => {
-      db.products.insert({
+      products().insert({
         name: req.body.name,
         condition: req.body.condition,
         minimum: req.body.minimum,
@@ -20,10 +20,28 @@ module.exports = {
           console.log('Error inserting document into database', err);
           res.status(400).send(err);
       });
+    }
+  },
+  productById: {
+    GET: (req, res) => {
+      const id = JSON.parse(req.params.id);
+      console.log(`Fetching document with id: ${id}`)
+      products().findOne({
+        _id: id
+      })
+      .then(data => {
+        console.log(`Succesfully fetched document with id: ${id}`, data);
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.log(`Error fetching document with id: ${id}`, err);
+        res.send(err);
+      });
     },
     PUT: (req, res) => {
-      db.products.update({
-        _id: req.body.id
+      const id = JSON.parse(req.params.id);
+      products().update({
+        _id: id
       }, {
         $set: {
           name: req.body.name,
@@ -47,30 +65,18 @@ module.exports = {
       });
     },
     DELETE: (req, res) => {
-      db.products.remove({
-        _id: req.body.id
+      const id = JSON.parse(req.params.id);
+      products().remove({
+        _id: id
       }, 1)
       .then(data => {
-        console.log('Successfully deleted document');
-        res.status(200).send(data);
+        console.log(`Successfully deleted document with id: ${id}`);
+        res.status(200).send();
       })
       .catch(err => {
-        console.log('Error deleting document', err);
+        console.log(`Error deleting document with id: ${id}`, err);
         res.stats(400).send(err);
       })
-    }
-  },
-  productById: {
-    GET: (req, res) => {
-      db.products.find({
-        _id: req.params.id
-      })
-      .then(data => {
-        res.status(200).json(data);
-      })
-      .catch(err => {
-        res.send(err);
-      });
     }
   },
 }
