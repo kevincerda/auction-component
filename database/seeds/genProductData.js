@@ -15,9 +15,10 @@ const genProductRecord = (id) => {
 
 const genBidRecord = (id) => {
   const user = genRandomInt(0, 1e7);
+  const product_id = faker.random.number({ 'min': 0, 'max': 1e7 });
   const minimum = faker.commerce.price();
   const bid = faker.random.number({ 'min': minimum, 'max': minimum * 3 }).toFixed(2);
-  return `${id}, ${user}, ${bid}`;
+  return `${id}, ${product_id}, ${user}, ${bid}`;
 };
 
 const genRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,6 +43,7 @@ const genRecords = (number, type, callback) => {
       stream.once('drain', write);
     };
   };
+  
   write();
 };
 
