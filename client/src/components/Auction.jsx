@@ -39,10 +39,10 @@ class Auction extends React.Component {
     getProductInfo({
       id: this.state.id
     }).then(({ data }) => {
-      let endDate = moment(data.createdAt).add(7, 'days');
+      let endDate = moment(data.created).add(60, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
       this.setState({
-        id: data.id,
+        // id: data.id,
         name: data.name,
         condition: data.condition,
         minimum: data.minimum,
@@ -61,15 +61,11 @@ class Auction extends React.Component {
 
   fetchBids() {
     getBids({
-      productId: this.state.id
+      id: this.state.id
     }).then(({ data }) => {
-      let bidCount = `${data[0]} bid`;
-      if (data[0] > 1) {
-        bidCount = `${data[0]} bids`;
-      }
       this.setState({
-        bidCount: bidCount,
-        currentBid: data[1].toFixed(2)
+        // bidCount: bidCount,
+        currentBid: data.bid
       })
     }).catch(err => {
       console.log('error fetching product bidCount', err);
