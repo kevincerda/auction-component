@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { router } = require('./router');
-require('../database/postgres/config');
+// require('../database/postgres/config');
 require('../database/mongodb/config');
 
 const port = 2106;
