@@ -1,18 +1,26 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-const dbName = 'auction';
-require('./../../seeds/seed.js');
+const URI = 'mongodb://localhost:27017/auction';
+let _db, _products, _bids;
 
-MongoClient.connect(url, (err, client) => {
-  err ? console.log('Error connecting to database') : console.log('Successfully connected to mongoDB');
+MongoClient.connect(URI, { useNewUrlParser: true })
+  .then(client => {
+    console.log('Successfully connected to mongoDB');
 
-  const db = client.db(dbName);
-
-  db.createCollection('products', (err) => {
-    err ? console.log('Failed to create collection', err) : console.log('Successfully created collection');
+    _db = client.db();
+    _products = _db.collection('products');
+    _bids = _db.collection('bids');
+  })
+  .catch(err => {
+    console.log('Error connecting to mongoDB');
+    throw err;
   });
 
-  // insert into db
+const db = () => _db;
+const bids = () => _bids;
+const products = () => _products;
 
-  // client.close();
-});
+module.exports = {
+  db,
+  bids,
+  products
+}
