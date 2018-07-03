@@ -9,3 +9,5 @@ products.csv
 bids.csv
 newrelic.js
 newrelic_agent.log
+bid.yml
+product.yml
