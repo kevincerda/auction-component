@@ -11,7 +11,7 @@ class Auction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 1,
+      id: 9999999,
       name: '',
       condition: '',
       minimum: '',
@@ -64,7 +64,7 @@ class Auction extends React.Component {
       id: this.state.id
     }).then(({ data }) => {
       this.setState({
-        // bidCount: bidCount,
+        bidCount: data.bid_count,
         currentBid: data.bid
       })
     }).catch(err => {
