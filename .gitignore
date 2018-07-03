@@ -8,3 +8,4 @@ data
 products.csv
 bids.csv
 newrelic.js
+newrelic_agent.log
