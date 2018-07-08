@@ -12,12 +12,12 @@ router.route('/auction/product/:id')
 
 router.route('/auction/bids')
   .post(bidCtrl.POST)
-  .put(bidCtrl.PUT)
-  .delete(bidCtrl.DELETE)
-
-router.route('/auction/bid/:id')
+  
+  router.route('/auction/bid/:id')
   .get(bidById.GET)
-
+  .put(bidById.PUT)
+  .delete(bidById.DELETE)
+  
 module.exports = {
   router
 };
