@@ -4,3 +4,5 @@ Gruntfile.js
 aws-credentials.json
 .gitignore
 .babelrc
+bids.csv
+products.csv

@@ -12,3 +12,7 @@ newrelic_agent.log
 bid.yml
 product.yml
 graveyard.js
+docker-compose.yml
+Dockerfile
+bids.zip
+loaderio-535944195d1064042b1aee7a09119f12.txt
