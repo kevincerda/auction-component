@@ -3,6 +3,7 @@ const { products } = require('../../database/mongodb/config');
 module.exports = {
   productCtrl: {
     POST: (req, res) => {
+      console.log('REQ', req);
       products().insert({
         name: req.body.name,
         condition: req.body.condition,
@@ -24,8 +25,8 @@ module.exports = {
   },
   productById: {
     GET: (req, res) => {
-      const id = JSON.parse(req.params.id);
-      console.log(`Fetching document with id: ${id}`)
+      const id = Number(req.params.id);
+      console.log(`Fetching document with id: ${id}`);
       products().findOne({
         _id: id
       })
@@ -39,7 +40,7 @@ module.exports = {
       });
     },
     PUT: (req, res) => {
-      const id = JSON.parse(req.params.id);
+      const id = Number(req.params.id);
       products().update({
         _id: id
       }, {
@@ -65,7 +66,7 @@ module.exports = {
       });
     },
     DELETE: (req, res) => {
-      const id = JSON.parse(req.params.id);
+      const id = Number(req.params.id);
       products().remove({
         _id: id
       }, 1)
@@ -76,7 +77,7 @@ module.exports = {
       .catch(err => {
         console.log(`Error deleting document with id: ${id}`, err);
         res.stats(400).send(err);
-      })
+      });
     }
   },
 }

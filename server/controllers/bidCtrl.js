@@ -16,10 +16,26 @@ module.exports = {
         console.error('Error inserting document into databse', err);
         res.stats(400).send(err);
       })
+    }
+  },
+  bidById: {
+    GET: (req, res) => {
+      const id = Number(req.params.id);
+      bids().findOne({
+        id: id
+      })
+      .then(data => {
+        console.log(`Succesfully fetched bid document with id: ${id}`, data);
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.log(`Error fetching bid document with id: ${id}`, err);
+        res.send(err);
+      })
     },
     PUT: (req, res) => {
       bids().update({
-        _id: req.body.id
+        id: req.body.id
       }, {
         $set: {
           bid: req.body.bid
@@ -36,7 +52,7 @@ module.exports = {
     },
     DELETE: (req, res) => {
       bids().remove({
-        _id: req.body.id
+        id: req.body.id
       }, 1)
       .then(data => {
         console.log(`Successfully deleted document`);
@@ -45,22 +61,6 @@ module.exports = {
       .catch(err => {
         console.error('Error deleting document', err);
         res.status(400).send(data);
-      })
-    }
-  },
-  bidById: {
-    GET: (req, res) => {
-      const id = JSON.parse(req.params.id);
-      bids().findOne({
-        _id: id
-      })
-      .then(data => {
-        console.log(`Succesfully fetched bid document with id: ${id}`, data);
-        res.status(200).send(data);
-      })
-      .catch(err => {
-        console.log(`Error fetching bid document with id: ${id}`, err);
-        res.send(err);
       })
     }
   }
