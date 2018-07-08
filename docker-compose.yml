@@ -1,18 +1,8 @@
-version: '3'
+version: "3"
 services:
-  db:
-    image: postgres
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: auction
   web:
-    command: "npm start"
-    image: anjoseph/auction:first
+    image: kevincerda/auction-microservice:latest
     ports:
-      - "9000:9000"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://postgres@db/auction
+      - "2106:2106"
+    command:
+      bash -c 'npm run build && npm start'
