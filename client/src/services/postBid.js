@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const postBid = (props) => {
-  return axios.post('http://localhost:2106/api/auction/bid', {
+  return axios.post('/api/auction/bids', {
     id: props.id,
+    customer: props.customer || 'Ebay Customer',
     bidInput: props.bidInput
   });
 };
