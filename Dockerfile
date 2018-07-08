@@ -1,14 +1,13 @@
-FROM node:10
+FROM node:carbon
 
-RUN apt-get update -yqq \
-  && apt-get install -yqq --no-install-recommends \
-  postgresql-client \
-  && rm -rf /var/lib/apt/lists
+WORKDIR  /Users/Kevin/Desktop/HRLA/SDC/auction-component
 
-WORKDIR /usr/src/app
-COPY package.json .
-COPY package-lock.json .
+COPY package.json ./
+
 RUN npm install
+
 COPY . .
 
-EXPOSE 9000
+EXPOSE 2106
+
+CMD [ "npm", "start" ]
