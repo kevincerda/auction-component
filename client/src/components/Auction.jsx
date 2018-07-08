@@ -39,7 +39,7 @@ class Auction extends React.Component {
     getProductInfo({
       id: this.state.id
     }).then(({ data }) => {
-      let endDate = moment(data.created).add(60, 'days');
+      let endDate = moment(data.created).add(90, 'days');
       let timeLeft = moment.duration(endDate.diff(moment()));
       this.setState({
         // id: data.id,
